@@ -1,0 +1,752 @@
+package gui;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import EMPLEADOS.ArrayEmpleados;
+import EMPLEADOS.Empleados;
+import PRODUCTOS.ArrayProductos;
+import PRODUCTOS.Productos;
+import PROVEEDORES.ArrayProveedor;
+import PROVEEDORES.Proveedor;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.JTabbedPane;
+import javax.swing.ImageIcon;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.awt.event.ActionEvent;
+import javax.swing.JTable;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JScrollPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class Sistema_Administrador extends JFrame implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JLabel lblAdministrador;
+	private JPanel panel;
+	private JButton btnSalir;
+	private JPanel panel_1;
+	private JTabbedPane tabbedPane;
+	private JPanel panel_2;
+	private JPanel panel_3;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JTextField txtNomPro;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_3;
+	private JTextField txtDescripcion;
+	private JLabel lblNewLabel_4;
+	private JTextField txtPrecio;
+	private JLabel lblNewLabel_5;
+	private JTextField txtStock;
+	private JTextField txtCodigo;
+	private JButton btnAgregar;
+	private JButton btnModificar;
+	private JButton btnEliminar;
+	private JLabel lblNewLabel_6;
+	private JLabel lblNewLabel_7;
+	private JLabel lblNewLabel_8;
+	private JLabel lblNewLabel_9;
+	private JLabel lblNewLabel_10;
+	private JLabel lblNewLabel_11;
+	private JLabel lblNewLabel_12;
+	private JTextField txtCodE;
+	private JTextField txtNomE;
+	private JTextField txtApelli;
+	private JComboBox cboCargo;
+	private JTextField txtSalario;
+	private JTextField txtHorasExtra;
+	private JComboBox cboAfiliacion;
+	private JButton btnAgregarE;
+	private JButton btnModificarE;
+	private JButton btnEliminarE;
+	private JTable table_1;
+	private JTable table;
+	private JPanel panel_4;
+	private JLabel lblNewLabel_13;
+	private JLabel lblNewLabel_14;
+	private JLabel lblNewLabel_15;
+	private JLabel lblNewLabel_16;
+	private JTextField txtRuc;
+	private JTextField txtEmpresa;
+	private JTextField txtTelefono;
+	private JTextField txtDireccion;
+	private JButton btnAgregarProve;
+	private JButton btnModificarProve;
+	private JButton btnEliminarProve;
+	private JTable table_2;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Sistema_Administrador frame = new Sistema_Administrador();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Sistema_Administrador() 
+	{
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 750, 501);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		{
+			lblAdministrador = new JLabel("ADMINISTRADOR ");
+			lblAdministrador.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 32));
+			lblAdministrador.setBounds(107, 11, 387, 82);
+			contentPane.add(lblAdministrador);
+		}
+		{
+			panel = new JPanel();
+			panel.setForeground(Color.WHITE);
+			panel.setBackground(Color.ORANGE);
+			panel.setBounds(0, 0, 179, 461);
+			contentPane.add(panel);
+			panel.setLayout(null);
+			{
+				btnSalir = new JButton("SALIR");
+				btnSalir.setBounds(27, 401, 89, 23);
+				panel.add(btnSalir);
+			}
+		}
+		{
+			panel_1 = new JPanel();
+			panel_1.setBackground(Color.WHITE);
+			panel_1.setBounds(179, 2, 555, 91);
+			contentPane.add(panel_1);
+			panel_1.setLayout(null);
+			{
+				lblNewLabel = new JLabel("");
+				lblNewLabel.setBounds(250, 11, 145, 82);
+				panel_1.add(lblNewLabel);
+				lblNewLabel.setIcon(new ImageIcon(Sistema_Administrador.class.getResource("/IMAGENES/panaderia_logo.png")));
+			}
+		}
+		{
+			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+			tabbedPane.setBounds(179, 94, 555, 367);
+			contentPane.add(tabbedPane);
+			{
+				panel_2 = new JPanel();
+				tabbedPane.addTab("EMPLEADOS", null, panel_2, null);
+				panel_2.setLayout(null);
+				{
+					lblNewLabel_6 = new JLabel("CODIGO:");
+					lblNewLabel_6.setBounds(10, 11, 45, 14);
+					panel_2.add(lblNewLabel_6);
+				}
+				{
+					lblNewLabel_7 = new JLabel("NOMBRE:");
+					lblNewLabel_7.setBounds(10, 36, 63, 25);
+					panel_2.add(lblNewLabel_7);
+				}
+				{
+					lblNewLabel_8 = new JLabel("APELLIDO:");
+					lblNewLabel_8.setBounds(10, 66, 63, 25);
+					panel_2.add(lblNewLabel_8);
+				}
+				{
+					lblNewLabel_9 = new JLabel("CARGO:");
+					lblNewLabel_9.setBounds(185, 6, 63, 25);
+					panel_2.add(lblNewLabel_9);
+				}
+				{
+					lblNewLabel_10 = new JLabel("SALARIO:");
+					lblNewLabel_10.setBounds(185, 36, 63, 25);
+					panel_2.add(lblNewLabel_10);
+				}
+				{
+					lblNewLabel_11 = new JLabel("HORAS EXTRA:");
+					lblNewLabel_11.setBounds(369, 6, 86, 25);
+					panel_2.add(lblNewLabel_11);
+				}
+				{
+					lblNewLabel_12 = new JLabel("AFILIACIÓN:");
+					lblNewLabel_12.setBounds(185, 72, 86, 25);
+					panel_2.add(lblNewLabel_12);
+				}
+				{
+					txtCodE = new JTextField();
+					txtCodE.setBounds(67, 8, 86, 20);
+					panel_2.add(txtCodE);
+					txtCodE.setColumns(10);
+				}
+				{
+					txtNomE = new JTextField();
+					txtNomE.addKeyListener(new KeyAdapter() {
+						@Override
+						public void keyTyped(KeyEvent e) {
+							
+							//PARA QUE PERMITA SOLAMENTE INGRESAR  LETRAS NO NUMEROS
+							   char c = e.getKeyChar();
+						        // Solo permite letras y espacio
+						        if (!Character.isLetter(c) && c != ' ') {
+						            e.consume(); // bloquea el carácter
+						        }
+							
+						}
+					});
+					txtNomE.setColumns(10);
+					txtNomE.setBounds(67, 38, 86, 20);
+					panel_2.add(txtNomE);
+				}
+				{
+					txtApelli = new JTextField();
+					txtApelli.addKeyListener(new KeyAdapter() {
+						@Override
+						public void keyTyped(KeyEvent e) {
+							//PARA QUE PERMITA SOLAMENTE INGRESAR  LETRAS NO NUMEROS
+							char validarLetras= e.getKeyChar();
+							if(Character.isDigit(validarLetras)) {
+								e.consume();
+								JOptionPane.showMessageDialog(null,"No debe ingresar numeros");
+
+							}
+							
+							
+						}
+					});
+					txtApelli.setColumns(10);
+					txtApelli.setBounds(67, 72, 86, 20);
+					panel_2.add(txtApelli);
+				}
+				{
+					cboCargo = new JComboBox();
+					cboCargo.setModel(new DefaultComboBoxModel(new String[] {"VENDEDOR", "PANADERO", "SUPERVISOR"}));
+					cboCargo.setBounds(256, 7, 80, 22);
+					panel_2.add(cboCargo);
+				}
+				{
+					txtSalario = new JTextField();
+					txtSalario.addKeyListener(new KeyAdapter() {
+						@Override
+						public void keyTyped(KeyEvent e) {
+							
+							//PARA QUE PERMITA SOLAMENTE INGRESAR NUMEROS
+							char validarLetras= e.getKeyChar();
+							if(!Character.isDigit(validarLetras)) {
+								e.consume();
+								JOptionPane.showMessageDialog(null,"No debe ingresar letras");
+
+							}
+						}
+					});
+					txtSalario.setBounds(258, 38, 80, 20);
+					panel_2.add(txtSalario);
+					txtSalario.setColumns(10);
+				}
+				{
+					txtHorasExtra = new JTextField();
+					txtHorasExtra.addKeyListener(new KeyAdapter() {
+						@Override
+						public void keyTyped(KeyEvent e) {
+							
+							//PARA QUE PERMITA SOLAMENTE INGRESAR  NUMEROS
+							char validarLetras= e.getKeyChar();
+							if(!Character.isDigit(validarLetras)) {
+								e.consume();
+								JOptionPane.showMessageDialog(null,"No debe ingresar letras");
+
+							}
+						}
+					});
+					txtHorasExtra.setColumns(10);
+					txtHorasExtra.setBounds(460, 8, 80, 20);
+					panel_2.add(txtHorasExtra);
+				}
+				{
+					cboAfiliacion = new JComboBox();
+					cboAfiliacion.setModel(new DefaultComboBoxModel(new String[] {"AFP", "ONP"}));
+					cboAfiliacion.setBounds(256, 67, 80, 22);
+					panel_2.add(cboAfiliacion);
+				}
+				{
+					btnAgregarE = new JButton("AGREGAR");
+					btnAgregarE.addActionListener(this);
+					btnAgregarE.setBounds(366, 37, 89, 23);
+					panel_2.add(btnAgregarE);
+				}
+				{
+					btnModificarE = new JButton("EDITAR");
+					btnModificarE.addActionListener(this);
+					btnModificarE.setBounds(366, 67, 174, 23);
+					panel_2.add(btnModificarE);
+				}
+				{
+					btnEliminarE = new JButton("ELIMINAR");
+					btnEliminarE.addActionListener(this);
+					btnEliminarE.setBounds(451, 37, 89, 23);
+					panel_2.add(btnEliminarE);
+				}
+				{
+					table_1 = new JTable();
+					JScrollPane scrollEmpleados = new JScrollPane(table_1);
+					scrollEmpleados.setBounds(10, 106, 530, 222);
+					panel_2.add(scrollEmpleados);
+				}
+			}
+			{
+				panel_3 = new JPanel();
+				tabbedPane.addTab("PRODUCTOS", null, panel_3, null);
+				panel_3.setLayout(null);
+				{
+					lblNewLabel_1 = new JLabel("CODIGO:");
+					lblNewLabel_1.setBounds(10, 11, 63, 25);
+					panel_3.add(lblNewLabel_1);
+				}
+				{
+					txtNomPro = new JTextField();
+					txtNomPro.setBounds(65, 47, 86, 20);
+					panel_3.add(txtNomPro);
+					txtNomPro.setColumns(10);
+				}
+				{
+					lblNewLabel_2 = new JLabel("NOMBRE: ");
+					lblNewLabel_2.setBounds(10, 47, 63, 25);
+					panel_3.add(lblNewLabel_2);
+				}
+				{
+					lblNewLabel_3 = new JLabel("DESCRPCIÓN:");
+					lblNewLabel_3.setBounds(172, 11, 86, 25);
+					panel_3.add(lblNewLabel_3);
+				}
+				{
+					txtDescripcion = new JTextField();
+					txtDescripcion.setBounds(249, 13, 291, 54);
+					txtDescripcion.setColumns(10);
+					panel_3.add(txtDescripcion);
+				}
+				{
+					lblNewLabel_4 = new JLabel("PRECIO:");
+					lblNewLabel_4.setBounds(10, 78, 86, 25);
+					panel_3.add(lblNewLabel_4);
+				}
+				{
+					txtPrecio = new JTextField();
+					txtPrecio.setColumns(10);
+					txtPrecio.setBounds(65, 78, 86, 20);
+					panel_3.add(txtPrecio);
+				}
+				{
+					lblNewLabel_5 = new JLabel("STOCK");
+					lblNewLabel_5.setBounds(172, 78, 86, 25);
+					panel_3.add(lblNewLabel_5);
+				}
+				{
+					txtStock = new JTextField();
+					txtStock.setColumns(10);
+					txtStock.setBounds(249, 80, 86, 20);
+					panel_3.add(txtStock);
+				}
+				{
+					txtCodigo = new JTextField();
+					txtCodigo.setColumns(10);
+					txtCodigo.setBounds(65, 13, 86, 20);
+					panel_3.add(txtCodigo);
+				}
+				
+				btnEliminar = new JButton("ELIMINAR");
+				btnEliminar.addActionListener(this);
+				btnEliminar.setBounds(124, 116, 89, 23);
+				panel_3.add(btnEliminar);
+				
+				btnModificar = new JButton("MODIFICAR");
+				btnModificar.addActionListener(this);
+				btnModificar.setBounds(246, 116, 89, 23);
+				panel_3.add(btnModificar);
+				{
+					btnAgregar = new JButton("AGREGAR");
+					btnAgregar.addActionListener(this);
+					btnAgregar.setBounds(20, 116, 89, 23);
+					panel_3.add(btnAgregar);
+				}
+				{
+					table = new JTable();
+					JScrollPane scrollProductos = new JScrollPane(table);
+					scrollProductos.setBounds(10, 146, 530, 182);
+					panel_3.add(scrollProductos);
+				}
+				{
+					panel_4 = new JPanel();
+					tabbedPane.addTab("PROVEEDOR", null, panel_4, null);
+					panel_4.setLayout(null);
+					{
+						lblNewLabel_13 = new JLabel("RUC 20:");
+						lblNewLabel_13.setBounds(10, 11, 63, 25);
+						panel_4.add(lblNewLabel_13);
+					}
+					{
+						lblNewLabel_14 = new JLabel("EMPRESA: ");
+						lblNewLabel_14.setBounds(10, 46, 63, 25);
+						panel_4.add(lblNewLabel_14);
+					}
+					{
+						lblNewLabel_15 = new JLabel("TELÉFONO:");
+						lblNewLabel_15.setBounds(163, 11, 63, 25);
+						panel_4.add(lblNewLabel_15);
+					}
+					{
+						lblNewLabel_16 = new JLabel("DIRECCIÓN:");
+						lblNewLabel_16.setBounds(163, 46, 63, 25);
+						panel_4.add(lblNewLabel_16);
+					}
+					{
+						txtRuc = new JTextField();
+						txtRuc.setBounds(67, 13, 86, 20);
+						panel_4.add(txtRuc);
+						txtRuc.setColumns(10);
+					}
+					{
+						txtEmpresa = new JTextField();
+						txtEmpresa.setColumns(10);
+						txtEmpresa.setBounds(67, 48, 86, 20);
+						panel_4.add(txtEmpresa);
+					}
+					{
+						txtTelefono = new JTextField();
+						txtTelefono.setColumns(10);
+						txtTelefono.setBounds(236, 13, 100, 20);
+						panel_4.add(txtTelefono);
+					}
+					{
+						txtDireccion = new JTextField();
+						txtDireccion.setColumns(10);
+						txtDireccion.setBounds(236, 48, 100, 20);
+						panel_4.add(txtDireccion);
+					}
+					{
+						btnAgregarProve = new JButton("AGREGAR");
+						btnAgregarProve.addActionListener(this);
+						btnAgregarProve.setBounds(346, 12, 89, 23);
+						panel_4.add(btnAgregarProve);
+					}
+					{
+						btnModificarProve = new JButton("MODIFICAR");
+						btnModificarProve.addActionListener(this);
+						btnModificarProve.setBounds(445, 12, 95, 23);
+						panel_4.add(btnModificarProve);
+					}
+					{
+						btnEliminarProve = new JButton("ELIMINAR");
+						btnEliminarProve.addActionListener(this);
+						btnEliminarProve.setBounds(346, 47, 89, 23);
+						panel_4.add(btnEliminarProve);
+					}
+					{
+						table_2 = new JTable();
+						JScrollPane scrollProveedores = new JScrollPane(table_2);
+						scrollProveedores.setBounds(10, 82, 530, 246);
+						panel_4.add(scrollProveedores);
+					}
+				}
+				ListarP("");
+				ListarE("");
+				ListarPV("");
+			}
+		}	
+	}
+	
+	//INTERACTUAR CON LA TABLA PRODUCTOS
+	protected void do_table_mouseClicked(MouseEvent e) {
+		
+		int fila = table.getSelectedRow();
+		txtCodigo.setText(String.valueOf(table.getValueAt(fila, 0)));
+		txtNomPro.setText(String.valueOf(table.getValueAt(fila, 1)));
+		txtDescripcion.setText(String.valueOf(table.getValueAt(fila, 2)));
+		txtPrecio.setText(String.valueOf(table.getValueAt(fila, 3)));
+		txtStock.setText(String.valueOf(table.getValueAt(fila, 4)));	
+	}
+	
+	//LISTAR PRODUCTOS
+	public void ListarP(String nom) 
+	{
+		DefaultTableModel modelo = new DefaultTableModel();
+		ArrayProductos p = new ArrayProductos();
+		ArrayList<Productos> lista = new ArrayList<Productos>();
+		if(nom.length()==0) lista=p.listarProductos();
+		else lista= p.consultarProductos(nom);	
+		modelo.setRowCount(lista.size());
+		Iterator<Productos> it = lista.iterator();
+		modelo.addColumn("Código");
+		modelo.addColumn("Nombre");
+		modelo.addColumn("Descripción");
+		modelo.addColumn("Precio");
+		modelo.addColumn("Stock");
+		int i=0;
+		while(it.hasNext())
+		{
+			Object obj= it.next();
+			Productos produc = (Productos) obj;
+			modelo.setValueAt(produc.getID_PRODUCTO(), i, 0);
+			modelo.setValueAt(produc.getNombre_PRO(), i, 1);
+			modelo.setValueAt(produc.getDescripción_PRO(), i, 2);
+			modelo.setValueAt(produc.getPrecio_venta(), i, 3);
+			modelo.setValueAt(produc.getStock_PRO(), i, 4);
+			i++;
+		}
+		table.setModel(modelo);
+	}
+	
+	//LISTAR EMPLEADOS
+	public void ListarE(String nom) 
+	{
+		DefaultTableModel modelo1 = new DefaultTableModel();
+		ArrayEmpleados e = new ArrayEmpleados();
+		ArrayList<Empleados> listaE = new ArrayList<Empleados>();
+		if(nom.length()==0) listaE=e.ListarEmpleados();
+		else listaE= e.ConsultarEmpleados(nom);	
+		modelo1.setRowCount(listaE.size());
+		Iterator<Empleados> it = listaE.iterator();
+		modelo1.addColumn("Código");
+		modelo1.addColumn("Nombre");
+		modelo1.addColumn("Apellido");
+		modelo1.addColumn("Cargo");
+		modelo1.addColumn("Salario");
+		modelo1.addColumn("Horas Extra");
+		modelo1.addColumn("Afiliación");
+		modelo1.addColumn("Sueldo Neto");
+		int i=0;
+		while(it.hasNext())
+		{
+			Object obj= it.next();
+			Empleados emple = (Empleados) obj;
+			modelo1.setValueAt(emple.getID_EMPLEADO(), i, 0);
+			modelo1.setValueAt(emple.getNombre_EMP(), i, 1);
+			modelo1.setValueAt(emple.getApellido_EMP(), i, 2);
+			modelo1.setValueAt(emple.getCargo_EMP(), i, 3);
+			modelo1.setValueAt(emple.getSalario(), i, 4);
+			modelo1.setValueAt(emple.getHorasE(), i, 5);
+			modelo1.setValueAt(emple.getTipoAfiliacion(), i, 6);
+			modelo1.setValueAt(emple.SueldoNeto(), i, 7);
+			i++;
+		}
+		table_1.setModel(modelo1);
+	}
+	
+	//LISTAR PROVEEDORES
+	public void ListarPV(String nom) 
+	{
+		DefaultTableModel modelo2 = new DefaultTableModel();
+		ArrayProveedor pv = new ArrayProveedor();
+		ArrayList<Proveedor> listaE = new ArrayList<Proveedor>();
+		if(nom.length()==0) listaE=pv.ListarProveedores();
+		else listaE= pv.ConsultarProveedores(nom);	
+		modelo2.setRowCount(listaE.size());
+		Iterator<Proveedor> it = listaE.iterator();
+		modelo2.addColumn("RUC 20");
+		modelo2.addColumn("EMPRESA");
+		modelo2.addColumn("Teléfono");
+		modelo2.addColumn("Dirección");
+		int i=0;
+		while(it.hasNext())
+		{
+			Object obj= it.next();
+			Proveedor prove = (Proveedor) obj;
+			modelo2.setValueAt(prove.getID_PROVEEDOR(), i, 0);
+			modelo2.setValueAt(prove.getNombre_PROV(), i, 1);
+			modelo2.setValueAt(prove.getTelefono_PROV(), i, 2);
+			modelo2.setValueAt(prove.getDireccion_PROV(), i, 3);
+			i++;
+		}
+		table_2.setModel(modelo2);
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEliminarProve) {
+			do_btnEliminarProve_actionPerformed(e);
+		}
+		if (e.getSource() == btnModificarProve) {
+			do_btnModificarProve_actionPerformed(e);
+		}
+		if (e.getSource() == btnAgregarProve) {
+			do_btnAgregarProve_actionPerformed(e);
+		}
+		if (e.getSource() == btnEliminarE) {
+			do_btnEliminarE_actionPerformed(e);
+		}
+		if (e.getSource() == btnModificarE) {
+			do_btnModificarE_actionPerformed(e);
+		}
+		if (e.getSource() == btnAgregarE) {
+			do_btnAgregarE_actionPerformed(e);
+		}
+		if (e.getSource() == btnEliminar) {
+			do_btnEliminar_actionPerformed(e);
+		}
+		if (e.getSource() == btnModificar) {
+			do_btnModificar_actionPerformed(e);
+		}
+		if (e.getSource() == btnAgregar) {
+			do_btnAgregar_actionPerformed(e);
+		}
+	}
+	
+	//PROGRAMAMOS LA PESTAÑA PRODUCTOS
+	
+	protected void do_btnAgregar_actionPerformed(ActionEvent e) {
+		try 
+		{
+			
+			Productos produc = new Productos(txtCodigo.getText(),txtNomPro.getText(),txtDescripcion.getText(),Double.parseDouble(txtPrecio.getText()),Integer.parseInt(txtStock.getText()));
+			ArrayProductos p = new ArrayProductos();
+			p.insertar(produc);
+			ListarP("");
+			LimpiarP();
+		} catch (Exception e2) {
+
+			JOptionPane.showMessageDialog(null,"Datos vacios");
+		}	
+	}
+	void LimpiarP() {
+		txtCodigo.setText("");
+		txtNomPro.setText("");
+		txtDescripcion.setText("");
+		txtPrecio.setText("");
+		txtStock.setText("");	
+	}	
+	protected void do_btnModificar_actionPerformed(ActionEvent e) 
+	{
+		try 
+		{		
+			Productos produc = new Productos(txtCodigo.getText(),txtNomPro.getText(),txtDescripcion.getText(),Double.parseDouble(txtPrecio.getText()),Integer.parseInt(txtStock.getText()));
+			ArrayProductos p = new ArrayProductos();
+			p.editar(produc);
+			ListarP("");
+			LimpiarP();
+		} catch (Exception e2) {
+
+			JOptionPane.showMessageDialog(null,"Datos vacios");
+		}
+	}
+	protected void do_btnEliminar_actionPerformed(ActionEvent e) 
+	{
+		ArrayProductos eliminar= new ArrayProductos();
+		eliminar.eliminar(txtCodigo.getText());
+		ListarP("");
+		LimpiarP();
+	}
+	
+	
+	//PROGRMAMOS LA PANTALLA DE EMPLEADOS
+	
+	protected void do_btnAgregarE_actionPerformed(ActionEvent e) 
+	{
+		try 
+		{		
+			Empleados emple = new Empleados(txtCodE.getText(),txtNomE.getText(),txtApelli.getText(), cboCargo.getSelectedItem().toString(),Double.parseDouble(txtSalario.getText()),Integer.parseInt(txtHorasExtra.getText()),cboAfiliacion.getSelectedItem().toString());
+			ArrayEmpleados E = new ArrayEmpleados();
+			E.Insertar(emple);
+			ListarE("");
+			LimpiarE();
+		} catch (Exception e2) {
+
+			JOptionPane.showMessageDialog(null,"Datos vacios");
+		}
+		
+	}
+	void LimpiarE() 
+	{
+		txtCodE.setText("");
+		txtNomE.setText("");
+		txtApelli.setText("");
+		txtSalario.setText("");
+		txtHorasExtra.setText("");	
+	}
+	
+	protected void do_btnModificarE_actionPerformed(ActionEvent e) 
+	{
+		try 
+		{		
+			Empleados emple = new Empleados(txtCodE.getText(),txtNomE.getText(),txtApelli.getText(), cboCargo.getSelectedItem().toString(),Double.parseDouble(txtSalario.getText()),Integer.parseInt(txtHorasExtra.getText()),cboAfiliacion.getSelectedItem().toString());
+			ArrayEmpleados E = new ArrayEmpleados();
+			E.Editar(emple);
+			ListarE("");
+			LimpiarE();
+		} catch (Exception e2) {
+
+			JOptionPane.showMessageDialog(null,"Datos vacios");
+		}
+	}
+	protected void do_btnEliminarE_actionPerformed(ActionEvent e) 
+	{
+		ArrayEmpleados E= new ArrayEmpleados();
+		E.Eliminar(txtCodE.getText());
+		ListarE("");
+		LimpiarE();	
+	}
+	
+	//PROGRAMAMOS LA PESTAÑA PROVEEDOR
+	protected void do_btnAgregarProve_actionPerformed(ActionEvent e) 
+	{
+		try 
+		{		
+			Proveedor provee = new Proveedor(txtRuc.getText(),txtEmpresa.getText(),txtTelefono.getText(),txtDireccion.getText());
+			ArrayProveedor PV = new ArrayProveedor();
+			PV.Insertar(provee);
+			ListarPV("");
+			LimpiarPV();
+		} catch (Exception e2) {
+
+			JOptionPane.showMessageDialog(null,"Datos vacios");
+		}
+	}
+	void LimpiarPV() {
+		txtRuc.setText("");
+		txtEmpresa.setText("");
+		txtTelefono.setText("");
+		txtDireccion.setText("");	
+	}	
+	protected void do_btnModificarProve_actionPerformed(ActionEvent e) 
+	{
+		try 
+		{		
+			Proveedor provee = new Proveedor(txtRuc.getText(),txtEmpresa.getText(),txtTelefono.getText(),txtDireccion.getText());
+			ArrayProveedor PV = new ArrayProveedor();
+			PV.Editar(provee);
+			ListarPV("");
+			LimpiarPV();
+			
+		} catch (Exception e2) {
+
+			JOptionPane.showMessageDialog(null,"Datos vacios");
+		}
+	}
+	protected void do_btnEliminarProve_actionPerformed(ActionEvent e) 
+	{
+		ArrayProveedor PV = new ArrayProveedor();
+		PV.Eliminar(txtRuc.getText());
+		ListarPV("");
+		LimpiarPV();
+	}
+}

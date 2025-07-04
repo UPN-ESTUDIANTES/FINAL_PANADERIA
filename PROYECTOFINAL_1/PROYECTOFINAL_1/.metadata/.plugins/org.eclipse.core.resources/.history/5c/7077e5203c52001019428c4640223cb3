@@ -1,0 +1,86 @@
+package EMPLEADOS;
+
+public class Empleados {
+	private String Nombre_EMP, Apellido_EMP, Cargo_EMP;
+	private int ID_EMPLEADO, HorasE, Afiliacion;
+	private double Salario;
+	public Empleados(String nombre_EMP, String apellido_EMP, String cargo_EMP, int iD_EMPLEADO, int horasE,
+			int afiliacion, double salario) {
+		super();
+		Nombre_EMP = nombre_EMP;
+		Apellido_EMP = apellido_EMP;
+		Cargo_EMP = cargo_EMP;
+		ID_EMPLEADO = iD_EMPLEADO;
+		HorasE = horasE;
+		Afiliacion = afiliacion;
+		Salario = salario;
+	}
+	public String getNombre_EMP() {
+		return Nombre_EMP;
+	}
+	public void setNombre_EMP(String nombre_EMP) {
+		Nombre_EMP = nombre_EMP;
+	}
+	public String getApellido_EMP() {
+		return Apellido_EMP;
+	}
+	public void setApellido_EMP(String apellido_EMP) {
+		Apellido_EMP = apellido_EMP;
+	}
+	public String getCargo_EMP() {
+		return Cargo_EMP;
+	}
+	public void setCargo_EMP(String cargo_EMP) {
+		Cargo_EMP = cargo_EMP;
+	}
+	public int getID_EMPLEADO() {
+		return ID_EMPLEADO;
+	}
+	public void setID_EMPLEADO(int iD_EMPLEADO) {
+		ID_EMPLEADO = iD_EMPLEADO;
+	}
+	public int getHorasE() {
+		return HorasE;
+	}
+	public void setHorasE(int horasE) {
+		HorasE = horasE;
+	}
+	public int getAfiliacion() {
+		return Afiliacion;
+	}
+	public void setAfiliacion(int afiliacion) {
+		Afiliacion = afiliacion;
+	}
+	public double getSalario() {
+		return Salario;
+	}
+	public void setSalario(double salario) {
+		Salario = salario;
+	}
+	
+	
+	public double MontoHorasE() {
+		return Salario*HorasE/240;
+	}
+	public double SueldoBruto() {
+		return Salario + MontoHorasE();
+	}
+	public double DsctoAFP() {
+		return 0.11*SueldoBruto();
+	}
+	public double DsctoONP() {
+		return 0.13*SueldoBruto();
+	}
+	public double DsctoESSALUD() {
+		return 0.09*SueldoBruto();
+	}
+	
+	public double SueldoNeto() {
+		if(Afiliacion==0) return SueldoBruto()-DsctoESSALUD()-DsctoAFP();
+		else return SueldoBruto()-DsctoESSALUD()-DsctoONP();
+	}
+	
+	public String getTipoAfiliacion() {
+	    return (Afiliacion == 0) ? "AFP" : "SNP";
+	}
+}

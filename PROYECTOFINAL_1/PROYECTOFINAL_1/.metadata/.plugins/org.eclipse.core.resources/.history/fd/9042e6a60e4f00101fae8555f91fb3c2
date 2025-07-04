@@ -1,0 +1,9 @@
+package CONEXIÓN;
+
+public class ConexiónMySQL {
+
+	public static void main(String[] args) {
+
+	}
+
+}

@@ -1,0 +1,29 @@
+package VENTAS;
+
+public class Ventas {
+private int ID_VENTA;
+private String Fecha_VENTA, ID_CLIENTE;
+public Ventas(int iD_VENTA, String fecha_VENTA, String iD_CLIENTE) {
+	ID_VENTA = iD_VENTA;
+	Fecha_VENTA = fecha_VENTA;
+	ID_CLIENTE = iD_CLIENTE;
+}
+public int getID_VENTA() {
+	return ID_VENTA;
+}
+public void setID_VENTA(int iD_VENTA) {
+	ID_VENTA = iD_VENTA;
+}
+public String getFecha_VENTA() {
+	return Fecha_VENTA;
+}
+public void setFecha_VENTA(String fecha_VENTA) {
+	Fecha_VENTA = fecha_VENTA;
+}
+public String getID_CLIENTE() {
+	return ID_CLIENTE;
+}
+public void setID_CLIENTE(String iD_CLIENTE) {
+	ID_CLIENTE = iD_CLIENTE;
+}
+}

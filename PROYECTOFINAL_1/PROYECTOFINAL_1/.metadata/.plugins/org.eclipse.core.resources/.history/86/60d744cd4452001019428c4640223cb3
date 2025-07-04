@@ -1,0 +1,29 @@
+package COMPRAS;
+
+public class Compras {
+private int ID_COMPRA;
+private String Fecha_COMPRA, ID_PROVEEDOR;
+public Compras(int iD_COMPRA, String fecha_COMPRA, String iD_PROVEEDOR) {
+	ID_COMPRA = iD_COMPRA;
+	Fecha_COMPRA = fecha_COMPRA;
+	ID_PROVEEDOR = iD_PROVEEDOR;
+}
+public int getID_COMPRA() {
+	return ID_COMPRA;
+}
+public void setID_COMPRA(int iD_COMPRA) {
+	ID_COMPRA = iD_COMPRA;
+}
+public String getFecha_COMPRA() {
+	return Fecha_COMPRA;
+}
+public void setFecha_COMPRA(String fecha_COMPRA) {
+	Fecha_COMPRA = fecha_COMPRA;
+}
+public String getID_PROVEEDOR() {
+	return ID_PROVEEDOR;
+}
+public void setID_PROVEEDOR(String iD_PROVEEDOR) {
+	ID_PROVEEDOR = iD_PROVEEDOR;
+}
+}
