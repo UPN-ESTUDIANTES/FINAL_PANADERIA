@@ -1,0 +1,116 @@
+package COMPRAS;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import CONEXIÓN.ConexiónMySQL;
+
+public class ArrayDetallesCompra {
+public ArrayList<Detalles_Compra> Listar() {
+    ArrayList<Detalles_Compra> lista = new ArrayList<>();
+    try {
+        CallableStatement csta = ConexiónMySQL.getConexión().prepareCall("{call SP_Listar_DET_COM()}");
+        ResultSet rs = csta.executeQuery();
+        Detalles_Compra dc;
+        while (rs.next()) {
+            dc = new Detalles_Compra(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getDouble(4));
+            lista.add(dc);
+        }
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e);
+}
+    return lista;
+}
+public ArrayList<Detalles_Compra> Consultar(String cod) {
+    ArrayList<Detalles_Compra> lista = new ArrayList<>();
+    try {
+        Statement st = ConexiónMySQL.getConexión().createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM DETALLES_COMPRA WHERE ID_COMPRA LIKE '%" + cod + "%'");
+        Detalles_Compra dc;
+        while (rs.next()) {
+            dc = new Detalles_Compra(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getDouble(4));
+            lista.add(dc);
+        }
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e);
+    }
+    return lista;
+}
+public ArrayList<Detalles_Compra> ConsultarPorID(String id) {
+    ArrayList<Detalles_Compra> lista = new ArrayList<>();
+    try {
+        Connection cnx = ConexiónMySQL.getConexión();
+        CallableStatement csta = cnx.prepareCall("{call SP_ConsultarCod_DET_COM(?)}");
+        csta.setString(1, id);
+        ResultSet rs = csta.executeQuery();
+        Detalles_Compra dc;
+        while (rs.next()) {
+            dc = new Detalles_Compra(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getDouble(4));
+            lista.add(dc);
+        }
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e);
+    }
+    return lista;
+}
+public void Insertar(Detalles_Compra d) {
+    try {
+        Connection cnx = ConexiónMySQL.getConexión();
+        CallableStatement csta = cnx.prepareCall("{call SP_Insertar_DET_COM(?,?,?,?)}");
+        csta.setString(1, d.getID_COMPRA());
+        csta.setString(2, d.getID_PRODUCTO());
+        csta.setInt(3, d.getCantidad());
+        csta.setDouble(4, d.getPrecioCompra());
+        csta.executeUpdate();
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e);
+    }
+}
+public void Eliminar(String id) {
+    try {
+        Connection cnx = ConexiónMySQL.getConexión();
+        CallableStatement csta = cnx.prepareCall("{call SP_Eliminar_DET_COM(?)}");
+        csta.setString(1, id);
+        csta.executeUpdate();
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e);
+    }
+}
+public void Editar(Detalles_Compra d) {
+    try {
+        Connection cnx = ConexiónMySQL.getConexión();
+        CallableStatement csta = cnx.prepareCall("{call SP_Editar_DET_COM(?,?,?,?)}");
+        csta.setString(1, d.getID_COMPRA());
+        csta.setString(2, d.getID_PRODUCTO());
+        csta.setInt(3, d.getCantidad());
+        csta.setDouble(4, d.getPrecioCompra());
+        csta.executeUpdate();
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e);
+    }
+}
+public ArrayList<Detalles_Compra> ListarOrdenadoPorFecha() {
+    ArrayList<Detalles_Compra> lista = new ArrayList<>();
+    try {
+        CallableStatement csta = ConexiónMySQL.getConexión()
+            .prepareCall("{call SP_Listar_DET_COM_Ordenado()}");
+        ResultSet rs = csta.executeQuery();
+        while (rs.next()) {
+            Detalles_Compra dc = new Detalles_Compra(
+                rs.getString(1),  // ID_COMPRA
+                rs.getString(2),  // ID_PRODUCTO
+                rs.getInt(3),     // CANTIDAD
+                rs.getDouble(4)   // PRECIO_COMPRA
+                // NO es necesario agregar la fecha aquí porque la clase actual no la usa
+            );
+            lista.add(dc);
+        }
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e);
+    }
+    return lista;
+}
+}

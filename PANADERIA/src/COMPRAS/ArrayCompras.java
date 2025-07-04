@@ -1,0 +1,95 @@
+package COMPRAS;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import CONEXIÓN.ConexiónMySQL;
+
+public class ArrayCompras {
+public ArrayList<Compras> Listar() {
+    ArrayList<Compras> lista = new ArrayList<>();
+    try {
+        CallableStatement csta = ConexiónMySQL.getConexión().prepareCall("{call SP_Listar_COM()}");
+        ResultSet rs = csta.executeQuery();
+        Compras com;
+        while (rs.next()) {
+        	com = new Compras(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5));
+        	lista.add(com);
+        }
+    } catch (Exception e) {
+            System.out.println("ERROR: " + e);
+    }
+    return lista;
+}
+public ArrayList<Compras> Consultar(String cod) {
+    ArrayList<Compras> lista = new ArrayList<>();
+    try {
+        Statement st = ConexiónMySQL.getConexión().createStatement();
+        ResultSet rs = st.executeQuery("Select * from COMPRAS where ID_COMPRA like '%" + cod + "%'");
+        Compras com;
+        while (rs.next()) {
+            com = new Compras(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5));
+         	lista.add(com);
+        }
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e);
+    }
+    return lista;
+}
+public ArrayList<Compras> ConsultarPorID(String id) {
+    ArrayList<Compras> lista = new ArrayList<>();
+    try {
+        Connection cnx = ConexiónMySQL.getConexión();
+        CallableStatement csta = cnx.prepareCall("{call SP_ConsultarCod_COM(?)}");
+        csta.setString(1, id);
+        ResultSet rs = csta.executeQuery();
+        Compras com;
+        while (rs.next()) {
+            com = new Compras(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5));
+            lista.add(com);
+        }
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e);
+    }
+    return lista;
+}
+public void Insertar(Compras c) {
+    try {
+    	Connection cnx = ConexiónMySQL.getConexión();
+        CallableStatement csta = cnx.prepareCall("{call SP_Insertar_COM(?,?,?,?)}");
+        csta.setString(1, c.getID_COMPRA());
+        csta.setString(2, c.getID_PROVEEDOR());
+        csta.setString(3, c.getID_EMPELEADO());
+        csta.setDouble(4, c.getTotal_COM());
+        csta.executeUpdate();
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e);
+    }
+}
+public void Eliminar(String id) {
+    try {
+        Connection cnx = ConexiónMySQL.getConexión();
+        CallableStatement csta = cnx.prepareCall("{call SP_Eliminar_COM(?)}");
+        csta.setString(1, id);
+        csta.executeUpdate();
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e);
+    }
+}
+public void Editar(Compras c) {
+    try {
+        Connection cnx = ConexiónMySQL.getConexión();
+        CallableStatement csta = cnx.prepareCall("{call SP_Editar_COM(?,?,?,?)}");
+        csta.setString(1, c.getID_COMPRA());
+        csta.setString(2, c.getID_PROVEEDOR());
+        csta.setString(3, c.getID_EMPELEADO());
+        csta.setDouble(4, c.getTotal_COM());
+        csta.executeUpdate();
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e);
+    }
+}
+}
