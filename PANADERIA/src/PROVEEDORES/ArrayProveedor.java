@@ -96,4 +96,28 @@ public void Editar(Proveedor prov) {
 		System.out.println("ERROR" + e);
 	}
 }
+public String generarNuevoIDProducto() {
+    String nuevoID = "A01";
+    String sql = "SELECT MAX(ID_PRODUCTO) FROM PRODUCTOS WHERE ID_PRODUCTO LIKE 'A%'";
+    
+    try {
+        Connection cnx = ConexiónMySQL.getConexión();
+        Statement stmt = cnx.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        
+        if (rs.next()) {
+            String ultimoID = rs.getString(1); // Ejemplo: "A07"
+            if (ultimoID != null) {
+                int num = Integer.parseInt(ultimoID.substring(1)); // 7
+                num++; // 8
+                nuevoID = String.format("A%02d", num); // "A08"
+            }
+        }
+        rs.close();
+        stmt.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return nuevoID;
+}
 }

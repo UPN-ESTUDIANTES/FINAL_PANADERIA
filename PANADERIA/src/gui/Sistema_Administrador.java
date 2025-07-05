@@ -7,10 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import COMPRAS.ArrayCompras;
-import COMPRAS.ArrayDetallesCompra;
-import COMPRAS.Compras;
-import COMPRAS.Detalles_Compra;
+import COMPRAS.ArrayComprasProductos;
+import COMPRAS.ComprasProductos;
 import EMPLEADOS.ArrayEmpleados;
 import EMPLEADOS.Empleados;
 import PRODUCTOS.ArrayProductos;
@@ -96,7 +94,6 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	private JTable table_2;
 	private JTextField txtEmail;
 	private JTextField txtDistrito;
-	private JTextField txtIdCompra;
 	private JTextField txtNombreProveedor;
 	private JTable tablaCompras;
 	private JTextField txtNombreEmpleado;
@@ -104,21 +101,16 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	private JComboBox<String> cmbProveedor;
 	private JComboBox<String> cmbEmpleado;
 	private JButton btnNewButton;
-	private JLabel lblNewLabel_19;
 	private JTextField txtNOMPRO;
 	private JLabel lblNewLabel_20;
 	private JLabel lblNewLabel_21;
 	private JTextField txtPREVEN;
-	private JTextField txtIDPRO;
 	private JLabel lblNewLabel_22;
 	private JTextField txtDES;
 	private JLabel lblNewLabel_23;
 	private JTextField txtCANT;
 	private JLabel lblNewLabel_24;
 	private JTextField txtPRECOM;
-	private JPanel panel_6;
-	private JScrollPane scrollPane_1;
-	private JTable table_DetallesCompra;
 
 	/**
 	 * Launch the application.
@@ -142,47 +134,47 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	public Sistema_Administrador() 
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 753, 501);
+		setBounds(100, 100, 1029, 584);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		{
-			lblAdministrador = new JLabel("ADMINISTRADOR ");
-			lblAdministrador.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 32));
-			lblAdministrador.setBounds(107, 11, 387, 82);
-			contentPane.add(lblAdministrador);
-		}
-		{
 			panel = new JPanel();
 			panel.setForeground(Color.WHITE);
 			panel.setBackground(Color.ORANGE);
-			panel.setBounds(0, 0, 179, 461);
+			panel.setBounds(0, 0, 179, 545);
 			contentPane.add(panel);
 			panel.setLayout(null);
 			{
 				btnSalir = new JButton("SALIR");
-				btnSalir.setBounds(27, 401, 89, 23);
+				btnSalir.setBounds(29, 511, 89, 23);
 				panel.add(btnSalir);
 			}
 		}
 		{
 			panel_1 = new JPanel();
 			panel_1.setBackground(Color.WHITE);
-			panel_1.setBounds(179, 2, 555, 91);
+			panel_1.setBounds(179, 2, 824, 91);
 			contentPane.add(panel_1);
 			panel_1.setLayout(null);
 			{
 				lblNewLabel = new JLabel("");
-				lblNewLabel.setBounds(250, 11, 145, 82);
+				lblNewLabel.setBounds(551, 11, 145, 82);
 				panel_1.add(lblNewLabel);
 				lblNewLabel.setIcon(new ImageIcon(Sistema_Administrador.class.getResource("/IMAGENES/panaderia_logo.png")));
+			}
+			{
+				lblAdministrador = new JLabel("ADMINISTRADOR ");
+				lblAdministrador.setBounds(70, 11, 387, 82);
+				panel_1.add(lblAdministrador);
+				lblAdministrador.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 32));
 			}
 		}
 		{
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-			tabbedPane.setBounds(179, 94, 555, 367);
+			tabbedPane.setBounds(179, 94, 824, 451);
 			contentPane.add(tabbedPane);
 			{
 				panel_2 = new JPanel();
@@ -312,423 +304,389 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 				{
 					table_1 = new JTable();
 					JScrollPane scrollEmpleados = new JScrollPane(table_1);
-					scrollEmpleados.setBounds(10, 106, 530, 222);
+					scrollEmpleados.setBounds(10, 106, 799, 311);
 					panel_2.add(scrollEmpleados);
 				}
 			}
 			{
-				panel_3 = new JPanel();
-				tabbedPane.addTab("PRODUCTOS", null, panel_3, null);
-				panel_3.setLayout(null);
+				panel_4 = new JPanel();
+				tabbedPane.addTab("PROVEEDOR", null, panel_4, null);
+				panel_4.setLayout(null);
 				{
-					lblNewLabel_1 = new JLabel("CODIGO:");
-					lblNewLabel_1.setBounds(10, 11, 63, 25);
-					panel_3.add(lblNewLabel_1);
+					lblNewLabel_13 = new JLabel("RUC 20:");
+					lblNewLabel_13.setBounds(10, 11, 63, 25);
+					panel_4.add(lblNewLabel_13);
 				}
 				{
-					txtNomPro = new JTextField();
-					txtNomPro.addKeyListener(new KeyAdapter() {
+					lblNewLabel_14 = new JLabel("EMPRESA: ");
+					lblNewLabel_14.setBounds(10, 46, 63, 25);
+					panel_4.add(lblNewLabel_14);
+				}
+				{
+					lblNewLabel_15 = new JLabel("TELÉFONO:");
+					lblNewLabel_15.setBounds(163, 11, 63, 25);
+					panel_4.add(lblNewLabel_15);
+				}
+				{
+					lblNewLabel_16 = new JLabel("DIRECCIÓN:");
+					lblNewLabel_16.setBounds(163, 46, 63, 25);
+					panel_4.add(lblNewLabel_16);
+				}
+				{
+					txtRuc = new JTextField();
+					txtRuc.addKeyListener(new KeyAdapter() {
 						@Override
 						public void keyTyped(KeyEvent e) {
-							
-							//PARA QUE PERMITA SOLAMENTE INGRESAR  LETRAS NO NUMEROS
-							   char c = e.getKeyChar();
-						        // Solo permite letras y espacio
-						        if (!Character.isLetter(c) && c != ' ') {
-						            e.consume(); // bloquea el carácter
-						        }
-						}
-					});
-					txtNomPro.setBounds(65, 47, 86, 20);
-					panel_3.add(txtNomPro);
-					txtNomPro.setColumns(10);
-				}
-				{
-					lblNewLabel_2 = new JLabel("NOMBRE: ");
-					lblNewLabel_2.setBounds(10, 47, 63, 25);
-					panel_3.add(lblNewLabel_2);
-				}
-				{
-					lblNewLabel_3 = new JLabel("DESCRIPCIÓN:");
-					lblNewLabel_3.setBounds(172, 11, 79, 25);
-					panel_3.add(lblNewLabel_3);
-				}
-				{
-					txtDescripcion = new JTextField();
-					txtDescripcion.addKeyListener(new KeyAdapter() {
-						@Override
-						public void keyTyped(KeyEvent e) {
-							
-						}
-					});
-					txtDescripcion.setBounds(249, 13, 291, 54);
-					txtDescripcion.setColumns(10);
-					panel_3.add(txtDescripcion);
-				}
-				{
-					lblNewLabel_4 = new JLabel("PRECIO:");
-					lblNewLabel_4.addKeyListener(new KeyAdapter() {
-						@Override
-						public void keyTyped(KeyEvent e) {
-						}
-					});
-					lblNewLabel_4.setBounds(10, 78, 86, 25);
-					panel_3.add(lblNewLabel_4);
-				}
-				{
-					txtPrecio = new JTextField();
-					txtPrecio.addKeyListener(new KeyAdapter() {
-						@Override
-						public void keyTyped(KeyEvent e) {
-							
 							 char c = e.getKeyChar();
-						        // Permite solo números y el punto (para números decimales)
-						        if (!Character.isDigit(c) && c != '.' && c != '\b') {
+						        if (!Character.isDigit(c) && c != ' ' && c != '\b') {
 						            e.consume(); // bloquea el carácter
 						        }
 						}
 					});
-					txtPrecio.setColumns(10);
-					txtPrecio.setBounds(65, 78, 86, 20);
-					panel_3.add(txtPrecio);
+					txtRuc.setBounds(67, 13, 86, 20);
+					panel_4.add(txtRuc);
+					txtRuc.setColumns(10);
 				}
 				{
-					lblNewLabel_5 = new JLabel("STOCK:");
-					lblNewLabel_5.setBounds(207, 78, 44, 25);
-					panel_3.add(lblNewLabel_5);
+					txtEmpresa = new JTextField();
+					txtEmpresa.setColumns(10);
+					txtEmpresa.setBounds(67, 48, 86, 20);
+					panel_4.add(txtEmpresa);
 				}
 				{
-					txtStock = new JTextField();
-					txtStock.addKeyListener(new KeyAdapter() {
+					txtTelefono = new JTextField();
+					txtTelefono.addKeyListener(new KeyAdapter() {
 						@Override
 						public void keyTyped(KeyEvent e) {
 							
-							 char c = e.getKeyChar();
-						     
-						        if (!Character.isDigit(c) && c != '.' && c != '\b') {
-						            e.consume(); // bloquea el carácter
-						        }
+							char c = e.getKeyChar();
+					        // Permite solo números enteros
+					        if (!Character.isDigit(c) && c != '\b') {
+					            e.consume(); // bloquea el carácter
+					        }
+
 						}
 					});
-					txtStock.setColumns(10);
-					txtStock.setBounds(249, 80, 86, 20);
-					panel_3.add(txtStock);
+					txtTelefono.setColumns(10);
+					txtTelefono.setBounds(236, 13, 100, 20);
+					panel_4.add(txtTelefono);
 				}
 				{
-					txtCodigo = new JTextField();
-					txtCodigo.setColumns(10);
-					txtCodigo.setBounds(65, 13, 86, 20);
-					panel_3.add(txtCodigo);
-				}
-				
-				btnEliminar = new JButton("ELIMINAR");
-				btnEliminar.addActionListener(this);
-				btnEliminar.setBounds(136, 116, 89, 23);
-				panel_3.add(btnEliminar);
-				
-				btnModificar = new JButton("MODIFICAR");
-				btnModificar.addActionListener(this);
-				btnModificar.setBounds(246, 116, 104, 23);
-				panel_3.add(btnModificar);
-				{
-					btnAgregar = new JButton("AGREGAR");
-					btnAgregar.addActionListener(this);
-					btnAgregar.setBounds(20, 116, 89, 23);
-					panel_3.add(btnAgregar);
+					txtDireccion = new JTextField();
+					txtDireccion.setColumns(10);
+					txtDireccion.setBounds(236, 48, 100, 20);
+					panel_4.add(txtDireccion);
 				}
 				{
-					table = new JTable();
-					JScrollPane scrollProductos = new JScrollPane(table);
-					scrollProductos.setBounds(10, 146, 530, 182);
-					panel_3.add(scrollProductos);
+					btnAgregarProve = new JButton("AGREGAR");
+					btnAgregarProve.addActionListener(this);
+					btnAgregarProve.setBounds(346, 12, 89, 23);
+					panel_4.add(btnAgregarProve);
 				}
 				{
-					panel_4 = new JPanel();
-					tabbedPane.addTab("PROVEEDOR", null, panel_4, null);
-					panel_4.setLayout(null);
-					{
-						lblNewLabel_13 = new JLabel("RUC 20:");
-						lblNewLabel_13.setBounds(10, 11, 63, 25);
-						panel_4.add(lblNewLabel_13);
-					}
-					{
-						lblNewLabel_14 = new JLabel("EMPRESA: ");
-						lblNewLabel_14.setBounds(10, 46, 63, 25);
-						panel_4.add(lblNewLabel_14);
-					}
-					{
-						lblNewLabel_15 = new JLabel("TELÉFONO:");
-						lblNewLabel_15.setBounds(163, 11, 63, 25);
-						panel_4.add(lblNewLabel_15);
-					}
-					{
-						lblNewLabel_16 = new JLabel("DIRECCIÓN:");
-						lblNewLabel_16.setBounds(163, 46, 63, 25);
-						panel_4.add(lblNewLabel_16);
-					}
-					{
-						txtRuc = new JTextField();
-						txtRuc.addKeyListener(new KeyAdapter() {
-							@Override
-							public void keyTyped(KeyEvent e) {
-								 char c = e.getKeyChar();
-							        if (!Character.isDigit(c) && c != ' ' && c != '\b') {
-							            e.consume(); // bloquea el carácter
-							        }
-							}
-						});
-						txtRuc.setBounds(67, 13, 86, 20);
-						panel_4.add(txtRuc);
-						txtRuc.setColumns(10);
-					}
-					{
-						txtEmpresa = new JTextField();
-						txtEmpresa.setColumns(10);
-						txtEmpresa.setBounds(67, 48, 86, 20);
-						panel_4.add(txtEmpresa);
-					}
-					{
-						txtTelefono = new JTextField();
-						txtTelefono.addKeyListener(new KeyAdapter() {
-							@Override
-							public void keyTyped(KeyEvent e) {
-								
-								char c = e.getKeyChar();
-						        // Permite solo números enteros
-						        if (!Character.isDigit(c) && c != '\b') {
-						            e.consume(); // bloquea el carácter
-						        }
-
-							}
-						});
-						txtTelefono.setColumns(10);
-						txtTelefono.setBounds(236, 13, 100, 20);
-						panel_4.add(txtTelefono);
-					}
-					{
-						txtDireccion = new JTextField();
-						txtDireccion.setColumns(10);
-						txtDireccion.setBounds(236, 48, 100, 20);
-						panel_4.add(txtDireccion);
-					}
-					{
-						btnAgregarProve = new JButton("AGREGAR");
-						btnAgregarProve.addActionListener(this);
-						btnAgregarProve.setBounds(346, 12, 89, 23);
-						panel_4.add(btnAgregarProve);
-					}
-					{
-						btnModificarProve = new JButton("MODIFICAR");
-						btnModificarProve.addActionListener(this);
-						btnModificarProve.setBounds(445, 12, 95, 23);
-						panel_4.add(btnModificarProve);
-					}
-					{
-						btnEliminarProve = new JButton("ELIMINAR");
-						btnEliminarProve.addActionListener(this);
-						btnEliminarProve.setBounds(346, 47, 89, 23);
-						panel_4.add(btnEliminarProve);
-					}
-					{
-						table_2 = new JTable();
-						JScrollPane scrollProveedores = new JScrollPane(table_2);
-						scrollProveedores.setBounds(10, 109, 530, 219);
-						panel_4.add(scrollProveedores);
-					}
-					
-					JLabel lblNewLabel_14_1 = new JLabel("EMAIL:");
-					lblNewLabel_14_1.setBounds(10, 79, 63, 25);
-					panel_4.add(lblNewLabel_14_1);
-					
-					JLabel lblNewLabel_14_1_1 = new JLabel("DISTRITO:");
-					lblNewLabel_14_1_1.setBounds(163, 79, 63, 25);
-					panel_4.add(lblNewLabel_14_1_1);
-					
-					txtEmail = new JTextField();
-					txtEmail.setColumns(10);
-					txtEmail.setBounds(67, 78, 86, 20);
-					panel_4.add(txtEmail);
-					
-					txtDistrito = new JTextField();
-					txtDistrito.setColumns(10);
-					txtDistrito.setBounds(236, 78, 86, 20);
-					panel_4.add(txtDistrito);
+					btnModificarProve = new JButton("MODIFICAR");
+					btnModificarProve.addActionListener(this);
+					btnModificarProve.setBounds(445, 12, 95, 23);
+					panel_4.add(btnModificarProve);
+				}
+				{
+					btnEliminarProve = new JButton("ELIMINAR");
+					btnEliminarProve.addActionListener(this);
+					btnEliminarProve.setBounds(346, 47, 89, 23);
+					panel_4.add(btnEliminarProve);
+				}
+				{
+					table_2 = new JTable();
+					JScrollPane scrollProveedores = new JScrollPane(table_2);
+					scrollProveedores.setBounds(10, 109, 799, 303);
+					panel_4.add(scrollProveedores);
 				}
 				
-				JPanel panel_5 = new JPanel();
-				tabbedPane.addTab("COMPRAS", null, panel_5, null);
-				panel_5.setLayout(null);
+				JLabel lblNewLabel_14_1 = new JLabel("EMAIL:");
+				lblNewLabel_14_1.setBounds(10, 79, 63, 25);
+				panel_4.add(lblNewLabel_14_1);
 				
-				txtIdCompra = new JTextField();
-				txtIdCompra.setBounds(75, 11, 86, 20);
-				panel_5.add(txtIdCompra);
-				txtIdCompra.setColumns(10);
+				JLabel lblNewLabel_14_1_1 = new JLabel("DISTRITO:");
+				lblNewLabel_14_1_1.setBounds(163, 79, 63, 25);
+				panel_4.add(lblNewLabel_14_1_1);
 				
-				JLabel lblNewLabel_11 = new JLabel("ID COMPRA:");
-				lblNewLabel_11.setBounds(10, 14, 69, 14);
-				panel_5.add(lblNewLabel_11);
+				txtEmail = new JTextField();
+				txtEmail.setColumns(10);
+				txtEmail.setBounds(67, 78, 86, 20);
+				panel_4.add(txtEmail);
 				
-				cmbProveedor = new JComboBox<String>();
-				cmbProveedor.setBounds(238, 10, 86, 22);
-				panel_5.add(cmbProveedor);
-				cmbProveedor.addActionListener(new ActionListener() {
-				    public void actionPerformed(ActionEvent e) {
-				        String idProveedor = (String) cmbProveedor.getSelectedItem();
-				        ArrayProveedor array = new ArrayProveedor();
-				        ArrayList<Proveedor> lista = array.ConsultarProveedoresID(idProveedor);
-
-				        if (!lista.isEmpty()) {
-				            Proveedor prov = lista.get(0); //primer proveedor
-				            txtNombreProveedor.setText(prov.getNombre_PROV());
-				        } else {
-				            txtNombreProveedor.setText(""); //por si no se encuentra nada
-				        }
-				    }
+				txtDistrito = new JTextField();
+				txtDistrito.setColumns(10);
+				txtDistrito.setBounds(236, 78, 86, 20);
+				panel_4.add(txtDistrito);
+			}
+			panel_3 = new JPanel();
+			tabbedPane.addTab("PRODUCTOS", null, panel_3, null);
+			panel_3.setLayout(null);
+			{
+				lblNewLabel_1 = new JLabel("CODIGO:");
+				lblNewLabel_1.setBounds(10, 11, 63, 25);
+				panel_3.add(lblNewLabel_1);
+			}
+			{
+				txtNomPro = new JTextField();
+				txtNomPro.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent e) {
+						
+						//PARA QUE PERMITA SOLAMENTE INGRESAR  LETRAS NO NUMEROS
+						   char c = e.getKeyChar();
+					        // Solo permite letras y espacio
+					        if (!Character.isLetter(c) && c != ' ') {
+					            e.consume(); // bloquea el carácter
+					        }
+					}
 				});
-				
-				JLabel lblNewLabel_17 = new JLabel("PROVEEDOR:");
-				lblNewLabel_17.setBounds(171, 14, 69, 14);
-				panel_5.add(lblNewLabel_17);
-				
-				txtNombreProveedor = new JTextField();
-				txtNombreProveedor.setEditable(false);
-				txtNombreProveedor.setBounds(334, 11, 96, 20);
-				panel_5.add(txtNombreProveedor);
-				txtNombreProveedor.setColumns(10);
-				
-				JLabel lblNewLabel_18 = new JLabel("EMPLEADO:");
-				lblNewLabel_18.setBounds(171, 40, 63, 14);
-				panel_5.add(lblNewLabel_18);
-				
-				cmbEmpleado = new JComboBox<String>();
-				cmbEmpleado.setBounds(238, 36, 86, 22);
-				panel_5.add(cmbEmpleado);
-				cmbEmpleado.addActionListener(new ActionListener() {
-				    public void actionPerformed(ActionEvent e) {
-				        String idEmpleado = (String) cmbEmpleado.getSelectedItem();
-				        ArrayEmpleados array = new ArrayEmpleados();
-				        ArrayList<Empleados> lista = array.ConsultarEmpleadosID(idEmpleado); // Este método ya lo debes tener
-
-				        if (!lista.isEmpty()) {
-				            Empleados emp = lista.get(0);
-				            txtNombreEmpleado.setText(emp.getNombre_EMP());
-				            txtCargoEmpleado.setText(emp.getCargo_EMP());
-				        } else {
-				            txtNombreEmpleado.setText("");
-				            txtCargoEmpleado.setText("");
-				        }
-				    }
-				});
-				
-				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setBounds(10, 148, 530, 180);
-				panel_5.add(scrollPane);
-				
-				tablaCompras = new JTable();
-				scrollPane.setViewportView(tablaCompras);
-				{
-					txtNombreEmpleado = new JTextField();
-					txtNombreEmpleado.setEditable(false);
-					txtNombreEmpleado.setColumns(10);
-					txtNombreEmpleado.setBounds(334, 37, 96, 20);
-					panel_5.add(txtNombreEmpleado);
-				}
-				{
-					txtCargoEmpleado = new JTextField();
-					txtCargoEmpleado.setEditable(false);
-					txtCargoEmpleado.setColumns(10);
-					txtCargoEmpleado.setBounds(440, 37, 96, 20);
-					panel_5.add(txtCargoEmpleado);
-				}
-				llenarComboProveedores(cmbProveedor);
-				llenarComboEmpleados(cmbEmpleado);
-				{
-					btnNewButton = new JButton("REGISTRAR COMPRA");
-					btnNewButton.addActionListener(this);
-					btnNewButton.setBounds(10, 114, 135, 23);
-					panel_5.add(btnNewButton);
-				}
-				{
-					lblNewLabel_19 = new JLabel("CODIGO:");
-					lblNewLabel_19.setBounds(10, 33, 63, 25);
-					panel_5.add(lblNewLabel_19);
-				}
-				{
-					txtNOMPRO = new JTextField();
-					txtNOMPRO.setColumns(10);
-					txtNOMPRO.setBounds(75, 56, 86, 20);
-					panel_5.add(txtNOMPRO);
-				}
-				{
-					lblNewLabel_20 = new JLabel("NOMBRE: ");
-					lblNewLabel_20.setBounds(10, 54, 63, 25);
-					panel_5.add(lblNewLabel_20);
-				}
-				{
-					lblNewLabel_21 = new JLabel("PRECIO VENTA:");
-					lblNewLabel_21.setBounds(10, 78, 86, 25);
-					panel_5.add(lblNewLabel_21);
-				}
-				{
-					txtPREVEN = new JTextField();
-					txtPREVEN.setColumns(10);
-					txtPREVEN.setBounds(98, 78, 63, 20);
-					panel_5.add(txtPREVEN);
-				}
-				{
-					txtIDPRO = new JTextField();
-					txtIDPRO.setColumns(10);
-					txtIDPRO.setBounds(75, 33, 86, 20);
-					panel_5.add(txtIDPRO);
-				}
-				{
-					lblNewLabel_22 = new JLabel("DESCRIPCIÓN:");
-					lblNewLabel_22.setBounds(171, 65, 79, 25);
-					panel_5.add(lblNewLabel_22);
-				}
-				{
-					txtDES = new JTextField();
-					txtDES.setColumns(10);
-					txtDES.setBounds(248, 68, 182, 25);
-					panel_5.add(txtDES);
-				}
-				{
-					lblNewLabel_23 = new JLabel("CANTIDAD:");
-					lblNewLabel_23.setBounds(171, 101, 69, 25);
-					panel_5.add(lblNewLabel_23);
-				}
-				{
-					txtCANT = new JTextField();
-					txtCANT.setColumns(10);
-					txtCANT.setBounds(238, 103, 86, 20);
-					panel_5.add(txtCANT);
-				}
-				{
-					lblNewLabel_24 = new JLabel("PRECIO COMPRA:");
-					lblNewLabel_24.setBounds(341, 101, 97, 25);
-					panel_5.add(lblNewLabel_24);
-				}
-				{
-					txtPRECOM = new JTextField();
-					txtPRECOM.setColumns(10);
-					txtPRECOM.setBounds(435, 103, 63, 20);
-					panel_5.add(txtPRECOM);
-				}
-				{
-					panel_6 = new JPanel();
-					tabbedPane.addTab("DETALLES COMPRA", null, panel_6, null);
-					panel_6.setLayout(null);
-					{
-						scrollPane_1 = new JScrollPane();
-						scrollPane_1.setBounds(10, 43, 530, 214);
-						panel_6.add(scrollPane_1);
-						{
-							table_DetallesCompra = new JTable();
-							scrollPane_1.setViewportView(table_DetallesCompra);
-						}
+				txtNomPro.setBounds(65, 47, 86, 20);
+				panel_3.add(txtNomPro);
+				txtNomPro.setColumns(10);
+			}
+			{
+				lblNewLabel_2 = new JLabel("NOMBRE: ");
+				lblNewLabel_2.setBounds(10, 47, 63, 25);
+				panel_3.add(lblNewLabel_2);
+			}
+			{
+				lblNewLabel_3 = new JLabel("DESCRIPCIÓN:");
+				lblNewLabel_3.setBounds(172, 11, 79, 25);
+				panel_3.add(lblNewLabel_3);
+			}
+			{
+				txtDescripcion = new JTextField();
+				txtDescripcion.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent e) {
+						
 					}
-				}
-				ListarDC();
+				});
+				txtDescripcion.setBounds(249, 13, 291, 54);
+				txtDescripcion.setColumns(10);
+				panel_3.add(txtDescripcion);
+			}
+			{
+				lblNewLabel_4 = new JLabel("PRECIO:");
+				lblNewLabel_4.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent e) {
+					}
+				});
+				lblNewLabel_4.setBounds(10, 78, 86, 25);
+				panel_3.add(lblNewLabel_4);
+			}
+			{
+				txtPrecio = new JTextField();
+				txtPrecio.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent e) {
+						
+						 char c = e.getKeyChar();
+					        // Permite solo números y el punto (para números decimales)
+					        if (!Character.isDigit(c) && c != '.' && c != '\b') {
+					            e.consume(); // bloquea el carácter
+					        }
+					}
+				});
+				txtPrecio.setColumns(10);
+				txtPrecio.setBounds(65, 78, 86, 20);
+				panel_3.add(txtPrecio);
+			}
+			{
+				lblNewLabel_5 = new JLabel("STOCK:");
+				lblNewLabel_5.setBounds(207, 78, 44, 25);
+				panel_3.add(lblNewLabel_5);
+			}
+			{
+				txtStock = new JTextField();
+				txtStock.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent e) {
+						
+						 char c = e.getKeyChar();
+					     
+					        if (!Character.isDigit(c) && c != '.' && c != '\b') {
+					            e.consume(); // bloquea el carácter
+					        }
+					}
+				});
+				txtStock.setColumns(10);
+				txtStock.setBounds(249, 80, 86, 20);
+				panel_3.add(txtStock);
+			}
+			{
+				txtCodigo = new JTextField();
+				txtCodigo.setColumns(10);
+				txtCodigo.setBounds(65, 13, 86, 20);
+				panel_3.add(txtCodigo);
+			}
+			
+			btnEliminar = new JButton("ELIMINAR");
+			btnEliminar.addActionListener(this);
+			btnEliminar.setBounds(136, 116, 89, 23);
+			panel_3.add(btnEliminar);
+			
+			btnModificar = new JButton("MODIFICAR");
+			btnModificar.addActionListener(this);
+			btnModificar.setBounds(246, 116, 104, 23);
+			panel_3.add(btnModificar);
+			{
+				btnAgregar = new JButton("AGREGAR");
+				btnAgregar.addActionListener(this);
+				btnAgregar.setBounds(20, 116, 89, 23);
+				panel_3.add(btnAgregar);
+			}
+			{
+				table = new JTable();
+				JScrollPane scrollProductos = new JScrollPane(table);
+				scrollProductos.setBounds(10, 146, 799, 266);
+				panel_3.add(scrollProductos);
+			}
+			
+			JPanel panel_5 = new JPanel();
+			tabbedPane.addTab("COMPRAS PRODUCTOS", null, panel_5, null);
+			panel_5.setLayout(null);
+			
+			cmbProveedor = new JComboBox<String>();
+			cmbProveedor.setBounds(511, 9, 86, 22);
+			panel_5.add(cmbProveedor);
+			cmbProveedor.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			        String idProveedor = (String) cmbProveedor.getSelectedItem();
+			        ArrayProveedor array = new ArrayProveedor();
+			        ArrayList<Proveedor> lista = array.ConsultarProveedoresID(idProveedor);
+
+			        if (!lista.isEmpty()) {
+			            Proveedor prov = lista.get(0); //primer proveedor
+			            txtNombreProveedor.setText(prov.getNombre_PROV());
+			        } else {
+			            txtNombreProveedor.setText(""); //por si no se encuentra nada
+			        }
+			    }
+			});
+			
+			JLabel lblNewLabel_17 = new JLabel("PROVEEDOR:");
+			lblNewLabel_17.setBounds(444, 13, 69, 14);
+			panel_5.add(lblNewLabel_17);
+			
+			txtNombreProveedor = new JTextField();
+			txtNombreProveedor.setEditable(false);
+			txtNombreProveedor.setBounds(607, 10, 96, 20);
+			panel_5.add(txtNombreProveedor);
+			txtNombreProveedor.setColumns(10);
+			
+			JLabel lblNewLabel_18 = new JLabel("EMPLEADO:");
+			lblNewLabel_18.setBounds(444, 40, 63, 14);
+			panel_5.add(lblNewLabel_18);
+			
+			cmbEmpleado = new JComboBox<String>();
+			cmbEmpleado.setBounds(511, 36, 86, 22);
+			panel_5.add(cmbEmpleado);
+			cmbEmpleado.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			    	String idEmpleado = (String) cmbEmpleado.getSelectedItem();
+			        if (idEmpleado != null) {
+			            ArrayEmpleados array = new ArrayEmpleados();
+			            ArrayList<Empleados> lista = array.ConsultarEmpleadosID(idEmpleado);
+			            if (!lista.isEmpty()) {
+			                Empleados emp = lista.get(0);
+			                txtNombreEmpleado.setText(emp.getNombre_EMP());
+			                txtCargoEmpleado.setText(emp.getCargo_EMP());
+			            } else {
+			                txtNombreEmpleado.setText("");
+			                txtCargoEmpleado.setText("");
+			            }
+			        }
+			    }
+			});
+			
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 148, 799, 264);
+			panel_5.add(scrollPane);
+			
+			tablaCompras = new JTable();
+			scrollPane.setViewportView(tablaCompras);
+			{
+				txtNombreEmpleado = new JTextField();
+				txtNombreEmpleado.setEditable(false);
+				txtNombreEmpleado.setColumns(10);
+				txtNombreEmpleado.setBounds(607, 37, 96, 20);
+				panel_5.add(txtNombreEmpleado);
+			}
+			{
+				txtCargoEmpleado = new JTextField();
+				txtCargoEmpleado.setEditable(false);
+				txtCargoEmpleado.setColumns(10);
+				txtCargoEmpleado.setBounds(713, 37, 96, 20);
+				panel_5.add(txtCargoEmpleado);
+			}
+			llenarComboProveedores(cmbProveedor);
+			LlenarComboEmpleadosSUPER(cmbEmpleado);
+			{
+				btnNewButton = new JButton("REGISTRAR COMPRA");
+				btnNewButton.addActionListener(this);
+				btnNewButton.setBounds(98, 114, 135, 23);
+				panel_5.add(btnNewButton);
+			}
+			{
+				txtNOMPRO = new JTextField();
+				txtNOMPRO.setColumns(10);
+				txtNOMPRO.setBounds(75, 10, 86, 20);
+				panel_5.add(txtNOMPRO);
+			}
+			{
+				lblNewLabel_20 = new JLabel("NOMBRE: ");
+				lblNewLabel_20.setBounds(10, 9, 63, 22);
+				panel_5.add(lblNewLabel_20);
+			}
+			{
+				lblNewLabel_21 = new JLabel("PRECIO VENTA:");
+				lblNewLabel_21.setBounds(10, 33, 86, 25);
+				panel_5.add(lblNewLabel_21);
+			}
+			{
+				txtPREVEN = new JTextField();
+				txtPREVEN.setColumns(10);
+				txtPREVEN.setBounds(98, 35, 63, 20);
+				panel_5.add(txtPREVEN);
+			}
+			{
+				lblNewLabel_22 = new JLabel("DESCRIPCIÓN:");
+				lblNewLabel_22.setBounds(171, 9, 79, 22);
+				panel_5.add(lblNewLabel_22);
+			}
+			{
+				txtDES = new JTextField();
+				txtDES.setColumns(10);
+				txtDES.setBounds(252, 8, 182, 46);
+				panel_5.add(txtDES);
+			}
+			{
+				lblNewLabel_23 = new JLabel("CANTIDAD:");
+				lblNewLabel_23.setBounds(171, 57, 69, 25);
+				panel_5.add(lblNewLabel_23);
+			}
+			{
+				txtCANT = new JTextField();
+				txtCANT.setColumns(10);
+				txtCANT.setBounds(238, 59, 86, 20);
+				panel_5.add(txtCANT);
+			}
+			{
+				lblNewLabel_24 = new JLabel("PRECIO COMPRA:");
+				lblNewLabel_24.setBounds(10, 57, 97, 25);
+				panel_5.add(lblNewLabel_24);
+			}
+			{
+				txtPRECOM = new JTextField();
+				txtPRECOM.setColumns(10);
+				txtPRECOM.setBounds(108, 59, 53, 20);
+				panel_5.add(txtPRECOM);
+			}
+			{
 				ListarC("");
 				ListarP("");
 				ListarE("");
@@ -852,13 +810,14 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 		}
 
 		// LLENAR COMBO DE EMPLEADOS
-		public void llenarComboEmpleados(JComboBox<String> cmb) {
-			cmb.removeAllItems();
-			ArrayEmpleados emp = new ArrayEmpleados();
-		    for (Empleados e : emp.ListarEmpleados()) {
-		        cmb.addItem(e.getID_EMPLEADO());
+		public void LlenarComboEmpleadosSUPER(JComboBox<String> cmb) {
+		    cmbEmpleado.removeAllItems();
+		    ArrayEmpleados empleadosDAO = new ArrayEmpleados();
+		    for (Empleados emp : empleadosDAO.ListarEmpleados()) {
+		        if (emp.getCargo_EMP().equalsIgnoreCase("Supervisor")) {
+		            cmbEmpleado.addItem(emp.getID_EMPLEADO());
+		        }
 		    }
-		    
 		}
 		
 	public void actionPerformed(ActionEvent e) {
@@ -907,7 +866,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null,"Datos vacios");
 		}
-		llenarComboEmpleados(cmbEmpleado);
+		LlenarComboEmpleadosSUPER(cmbEmpleado);
 	}
 	void LimpiarP() {
 		txtCodigo.setText("");
@@ -949,7 +908,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			ArrayEmpleados E = new ArrayEmpleados();
 			E.Insertar(emple);
 			ListarE("");
-			llenarComboEmpleados(cmbEmpleado);
+			LlenarComboEmpleadosSUPER(cmbEmpleado);
 			LimpiarE();
 		} catch (Exception e2) {
 
@@ -973,7 +932,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			ArrayEmpleados E = new ArrayEmpleados();
 			E.Editar(emple);
 			ListarE("");
-			llenarComboEmpleados(cmbEmpleado);
+			LlenarComboEmpleadosSUPER(cmbEmpleado);
 			LimpiarE();
 		} catch (Exception e2) {
 
@@ -985,7 +944,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 		ArrayEmpleados E= new ArrayEmpleados();
 		E.Eliminar(txtCodE.getText());
 		ListarE("");
-		llenarComboEmpleados(cmbEmpleado);
+		LlenarComboEmpleadosSUPER(cmbEmpleado);
 		LimpiarE();	
 	}
 	
@@ -1040,110 +999,146 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	
 	public void ListarC(String nom) {
 	    DefaultTableModel modelo = new DefaultTableModel();
-	    ArrayCompras ac = new ArrayCompras();
-	    ArrayList<Compras> listaC;
+	    ArrayComprasProductos ac = new ArrayComprasProductos();
+	    ArrayProductos productosDAO = new ArrayProductos();
+	    ArrayEmpleados empleadosDAO = new ArrayEmpleados();
+	    ArrayProveedor proveedoresDAO = new ArrayProveedor();
+
+	    ArrayList<ComprasProductos> listaC;
 
 	    if (nom.length() == 0) {
 	        listaC = ac.Listar();
 	    } else {
-	        listaC = ac.Consultar(nom);
+	        listaC = ac.ConsultarPorID(nom);
 	    }
 
-	    modelo.setRowCount(listaC.size());
 	    modelo.addColumn("ID COMPRA");
-	    modelo.addColumn("PROVEEDOR");
-	    modelo.addColumn("EMPLEADO");
+	    modelo.addColumn("RUC PROV");
+	    modelo.addColumn("NOM PROV");  // solo visual
+	    modelo.addColumn("DNI EMP");
+	    modelo.addColumn("NOM EMP");   // solo visual
 	    modelo.addColumn("FECHA");
+	    modelo.addColumn("PRODUCTO");  // solo visual
+	    modelo.addColumn("CANTIDAD");
+	    modelo.addColumn("P COMPRA");
 	    modelo.addColumn("TOTAL");
 
-	    int i = 0;
-	    for (Compras c : listaC) {
-	        modelo.setValueAt(c.getID_COMPRA(), i, 0);
-	        modelo.setValueAt(c.getID_PROVEEDOR(), i, 1);
-	        modelo.setValueAt(c.getID_EMPELEADO(), i, 2);
-	        modelo.setValueAt(c.getFecha_COM(), i, 3);
-	        modelo.setValueAt(c.getTotal_COM(), i, 4);
-	        i++;
+	    for (ComprasProductos c : listaC) {
+	        String nombreEmpleado = "";
+	        String nombreProveedor = "";
+	        String nombreProducto = "";
+
+	        //Buscar nombre del empleado
+	        for (Empleados emp : empleadosDAO.ListarEmpleados()) {
+	            if (emp.getID_EMPLEADO().equals(c.getID_EMPLEADO())) {
+	                nombreEmpleado = emp.getNombre_EMP();
+	                break;
+	            }
+	        }
+
+	        //Buscar nombre del proveedor
+	        for (Proveedor prov : proveedoresDAO.ListarProveedores()) {
+	            if (prov.getID_PROVEEDOR().equals(c.getID_PROVEEDOR())) {
+	                nombreProveedor = prov.getNombre_PROV();
+	                break;
+	            }
+	        }
+
+	        //Buscar producto que tenga exactamente la cantidad registrada (solo como visual)
+	        for (Productos p : productosDAO.listarProductos()) {
+	            if (p.getStock_PRO() == c.getCantidad_COM_PRO()) {
+	                nombreProducto = p.getNombre_PRO();
+	                break;
+	            }
+	        }
+
+	        Object[] fila = new Object[10];
+	        fila[0] = c.getID_COMPRA();
+	        fila[1] = c.getID_PROVEEDOR();
+	        fila[2] = nombreProveedor;
+	        fila[3] = c.getID_EMPLEADO();
+	        fila[4] = nombreEmpleado;
+	        fila[5] = c.getFecha_COM_PRO();
+	        fila[6] = nombreProducto;
+	        fila[7] = c.getCantidad_COM_PRO();
+	        fila[8] = c.getPrecioC_COM_PRO();
+	        fila[9] = c.getTotal_COM();
+	        modelo.addRow(fila);
 	    }
 
 	    tablaCompras.setModel(modelo);
 	}
-	public void ListarDC() {
-	    DefaultTableModel modelo = new DefaultTableModel();
-	    modelo.addColumn("ID COMPRA");
-	    modelo.addColumn("ID PRODUCTO");
-	    modelo.addColumn("CANTIDAD");
-	    modelo.addColumn("PRECIO COMPRA");
-
-	    ArrayDetallesCompra dc = new ArrayDetallesCompra();
-	    ArrayList<Detalles_Compra> lista = dc.ListarOrdenadoPorFecha();
-
-	    for (Detalles_Compra det : lista) {
-	        Object[] fila = new Object[4];
-	        fila[0] = det.getID_COMPRA();
-	        fila[1] = det.getID_PRODUCTO();
-	        fila[2] = det.getCantidad();
-	        fila[3] = det.getPrecioCompra();
-	        modelo.addRow(fila);
-	    }
-
-	    table_DetallesCompra.setModel(modelo);
-	}
 	protected void do_btnNewButton_actionPerformed(ActionEvent e) {
 		try {
-	        // Obtener datos
-	        String idCompra = txtIdCompra.getText();
-	        String idProveedor = (String) cmbProveedor.getSelectedItem();
-	        String idEmpleado = (String) cmbEmpleado.getSelectedItem();
-	        String idProducto = txtIDPRO.getText();
-	        String nombre = txtNOMPRO.getText();
-	        String descripcion = txtDES.getText();
+	        //Obtener datos del producto desde los campos de texto
+	        String nombre = txtNOMPRO.getText().trim();
+	        String descripcion = txtDES.getText().trim();
 	        double precioVenta = Double.parseDouble(txtPREVEN.getText());
 	        int cantidad = Integer.parseInt(txtCANT.getText());
 	        double precioCompra = Double.parseDouble(txtPRECOM.getText());
-	        double totalCompra = precioCompra * cantidad;
+	        double total = precioCompra * cantidad;
 
-	        // DAO
-	        ArrayProductos productosDAO = new ArrayProductos();
-	        ArrayList<Productos> existe = productosDAO.ConsultarCod(idProducto);
+	        //Obtener datos del proveedor y empleado
+	        String idProveedor = (String) cmbProveedor.getSelectedItem();
+	        String idEmpleado = (String) cmbEmpleado.getSelectedItem();
 
-	        if (existe.size() > 0) {
-	            // Si ya existe el producto → solo actualiza stock
-	            productosDAO.ActualizarStock(idProducto, cantidad);
-	        } else {
-	            // Si no existe el producto → insertarlo
-	            Productos nuevo = new Productos(idProducto, nombre, descripcion, precioVenta, cantidad);
-	            productosDAO.insertar(nuevo);
+	        //Validar que el empleado sea SUPERVISOR
+	        ArrayEmpleados daoEmp = new ArrayEmpleados();
+	        ArrayList<Empleados> empList = daoEmp.ConsultarEmpleadosID(idEmpleado);
+	        if (empList.isEmpty() || !empList.get(0).getCargo_EMP().equalsIgnoreCase("Supervisor")) {
+	            JOptionPane.showMessageDialog(null, "Solo un Supervisor puede registrar compras.");
+	            return;
 	        }
 
-	        // Luego registrar la compra
-	        Compras compra = new Compras(idCompra, idProveedor, idEmpleado, null, totalCompra);
-	        ArrayCompras comprasDAO = new ArrayCompras();
-	        comprasDAO.Insertar(compra);
+	        //Verificar si el producto ya existe por su nombre
+	        ArrayProductos daoProd = new ArrayProductos();
+	        ArrayList<Productos> existe = daoProd.ConsultarPorNombre(nombre);
+	        String idProducto;
 
-	        // Finalmente insertar detalle de compra
-	        Detalles_Compra detalle = new Detalles_Compra(idCompra, idProducto, cantidad, precioCompra);
-	        ArrayDetallesCompra detallesDAO = new ArrayDetallesCompra();
-	        detallesDAO.Insertar(detalle);
+	        if (!existe.isEmpty()) {
+	            //Producto ya existe → solo actualiza stock
+	            idProducto = existe.get(0).getID_PRODUCTO();
+	            daoProd.ActualizarStock(idProducto, cantidad);
+	        } else {
+	            //Producto nuevo → generar ID de PRODUCTO y registrar
+	            idProducto = daoProd.generarNuevoIDProducto();  //ID tipo A01, A02, etc.
+	            Productos nuevo = new Productos(idProducto, nombre, descripcion, precioVenta, cantidad);
+	            daoProd.insertar(nuevo);
+	        }
 
-	        // Limpiar campos
-	        txtIDPRO.setText("");
+	        //Generar ID de compra
+	        ArrayComprasProductos daoCompra = new ArrayComprasProductos();
+	        String idCompra = daoCompra.generarNuevoIDCompra();  // ID tipo CP01, CP02...
+
+	        //Crear objeto de compra y registrar en tabla COMPRA_PRODUCTOS
+	        ComprasProductos cp = new ComprasProductos(
+	            idCompra,
+	            idProveedor,
+	            idEmpleado,
+	            null,  // Fecha se autogenera
+	            cantidad,
+	            precioCompra,
+	            total
+	        );
+
+	        daoCompra.Insertar(cp);
+
+	        //Limpiar campos
 	        txtNOMPRO.setText("");
 	        txtDES.setText("");
 	        txtPREVEN.setText("");
-	        txtPRECOM.setText("");
 	        txtCANT.setText("");
-	        txtIdCompra.setText("");
+	        txtPRECOM.setText("");
 
-	        // Actualizar tablas
-	        ListarC("");
-	        ListarP("");
-	        ListarDC();
+	        //Actualizar visualización
+	        ListarC("");   // Tabla de compras
+	        ListarP("");   // Tabla de productos
 
 	        JOptionPane.showMessageDialog(null, "Compra registrada correctamente.");
+
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
-	        JOptionPane.showMessageDialog(null, "ERROR al registrar compra: " + ex.getMessage());
+	        JOptionPane.showMessageDialog(null, "Error al registrar compra: " + ex.getMessage());
 	    }
 	}
 }
