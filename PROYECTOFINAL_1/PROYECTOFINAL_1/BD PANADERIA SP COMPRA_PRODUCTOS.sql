@@ -8,31 +8,37 @@ CREATE PROCEDURE SP_Insertar_COM_PRO(
 id VARCHAR(30),
 proveedor VARCHAR(30),
 empleado VARCHAR(30),
+nombreProducto VARCHAR(100),
 cantidad INT,
 precio REAL,
 total REAL)
 INSERT INTO COMPRA_PRODUCTOS (
-ID_COMPRA, ID_PROVEEDOR, ID_EMPLEADO, 
-Cantidad_COM_PRO, PrecioC_COM_PRO, Total_COM_PRO)
-VALUES (id, proveedor, empleado, cantidad, precio, total);
+ID_COMPRA, ID_PROVEEDOR, ID_EMPLEADO, NOMBRE_PRO,
+Cantidad_COM_PRO, PrecioC_COM_PRO, Total_COM_PRO) 
+VALUES (id, proveedor, empleado, nombreProducto,
+cantidad, precio, total);
 
 CREATE PROCEDURE SP_Eliminar_COM_PRO(
-    IN id VARCHAR(30))
+id VARCHAR(30))
 DELETE FROM COMPRA_PRODUCTOS WHERE ID_COMPRA = id;
 
 CREATE PROCEDURE SP_Editar_COM_PRO(
 id VARCHAR(30),
 proveedor VARCHAR(30),
 empleado VARCHAR(30),
+nombreProducto VARCHAR(100),
 cantidad INT,
 precio REAL,
 total REAL)
-UPDATE COMPRA_PRODUCTOS SET ID_PROVEEDOR = proveedor,
+UPDATE COMPRA_PRODUCTOS SET
+ID_PROVEEDOR = proveedor,
 ID_EMPLEADO = empleado,
-Cantidad_COM_PRO = cantidad, PrecioC_COM_PRO = precio,
+NOMBRE_PRO = nombreProducto,
+Cantidad_COM_PRO = cantidad,
+PrecioC_COM_PRO = precio,
 Total_COM_PRO = total
 WHERE ID_COMPRA = id;
 
 CREATE PROCEDURE SP_ConsultarCod_COM_PRO(
-    IN id VARCHAR(30))
+id VARCHAR(30))
 SELECT * FROM COMPRA_PRODUCTOS WHERE ID_COMPRA = id;

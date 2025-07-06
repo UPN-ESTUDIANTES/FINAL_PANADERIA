@@ -23,7 +23,7 @@ call SP_Listar_PRO();
 
 create procedure SP_Eliminar_PRO(
 id VARCHAR(30))
-delete from PRODUCTOS where ID_PRODUCTO = id;
+delete from PRODUCTOS where Nombre_PRO = id;
 
 call SP_Eliminar_PRO('A03');
 call SP_Listar_PRO();
@@ -42,7 +42,7 @@ call SP_Listar_PRO();
 
 create procedure SP_ConsultarNOMBRE_PRO(
 nom VARCHAR(100))
-select * from PRODUCTOS where Nombre_PRO=nom;
+select * from PRODUCTOS where Nombre_PRO LIKE CONCAT('%', nom, '%');
 
 call SP_ConsultarNOMBRE_PRO('Pan Francés');
 
@@ -51,3 +51,9 @@ IN p_idProducto VARCHAR(30),
 IN p_cantidad INT)
 UPDATE PRODUCTOS SET Stock_PRO = Stock_PRO + p_cantidad
 WHERE ID_PRODUCTO = p_idProducto;
+
+CREATE PROCEDURE SP_Actualizar_PrecioVenta(
+cod VARCHAR(30),
+nuevoPrecio REAL)
+UPDATE PRODUCTOS SET Precio_venta = nuevoPrecio
+WHERE ID_PRODUCTO = cod;
