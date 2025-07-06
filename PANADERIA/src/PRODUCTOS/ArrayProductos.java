@@ -30,7 +30,7 @@ public class ArrayProductos
 		ArrayList<Productos> lista=new ArrayList<Productos>();
 		try {
 			java.sql.Statement sta=ConexiónMySQL.getConexión().createStatement();
-			ResultSet rs=sta.executeQuery("select * from PRODUCTOS where Nombre_PRO like %"+nom+"%");
+			ResultSet rs=sta.executeQuery("select * from PRODUCTOS where Nombre_PRO like '%"+nom+"%'");
 			Productos produc;
 			while (rs.next()) {
 				produc = new Productos(rs.getString(1),rs.getString(2), rs.getString(3),rs.getDouble(4),rs.getInt(5));
@@ -79,22 +79,22 @@ public class ArrayProductos
 		}
 	}
 	
-	public void eliminar(String cod) {
-		try {
-			Connection cnx=ConexiónMySQL.getConexión();
-			CallableStatement csta=cnx.prepareCall("{call SP_Eliminar_PRO(?)}");
-			csta.setString(1, cod);
-			csta.executeUpdate();
-		} catch (Exception e) {
-			System.out.println("ERROR"+e);
-		}
+	public void eliminarPorNombre(String nombre) {
+	    try {
+	        Connection cnx = ConexiónMySQL.getConexión();
+	        CallableStatement csta = cnx.prepareCall("{call SP_Eliminar_PRO(?)}");
+	        csta.setString(1, nombre);
+	        csta.executeUpdate();
+	    } catch (Exception e) {
+	        System.out.println("ERROR al eliminar producto por nombre: " + e);
+	    }
 	}
 	
 	
 	public void editar(Productos produc) {
 		try {
 			Connection cnx=ConexiónMySQL.getConexión();
-			CallableStatement csta=cnx.prepareCall("{call SP_Listar_PRO(?,?,?,?,?)}");
+			CallableStatement csta=cnx.prepareCall("{call SP_Editar_PRO(?,?,?,?,?)}");
 			csta.setString(1, produc.getID_PRODUCTO());
 			csta.setString(2, produc.getNombre_PRO());
 			csta.setString(3, produc.getDescripción_PRO());
@@ -114,6 +114,17 @@ public class ArrayProductos
 	        csta.executeUpdate();
 	    } catch (Exception e) {
 	        System.out.println("ERROR al actualizar stock: " + e);
+	    }
+	}
+	public void ActualizarPrecioVenta(String idProducto, double nuevoPrecio) {
+	    try {
+	        Connection cnx = ConexiónMySQL.getConexión();
+	        CallableStatement csta = cnx.prepareCall("{call SP_Actualizar_PrecioVenta(?, ?)}");
+	        csta.setString(1, idProducto);
+	        csta.setDouble(2, nuevoPrecio);
+	        csta.executeUpdate();
+	    } catch (Exception e) {
+	        System.out.println("ERROR al actualizar precio venta: " + e);
 	    }
 	}
 	public String generarNuevoIDProducto() {

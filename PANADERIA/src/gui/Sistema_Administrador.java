@@ -36,6 +36,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+
 
 public class Sistema_Administrador extends JFrame implements ActionListener {
 
@@ -49,7 +51,6 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	private JPanel panel_2;
 	private JPanel panel_3;
 	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
 	private JTextField txtNomPro;
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
@@ -58,7 +59,6 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	private JTextField txtPrecio;
 	private JLabel lblNewLabel_5;
 	private JTextField txtStock;
-	private JTextField txtCodigo;
 	private JButton btnAgregar;
 	private JButton btnModificar;
 	private JButton btnEliminar;
@@ -111,6 +111,11 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	private JTextField txtCANT;
 	private JLabel lblNewLabel_24;
 	private JTextField txtPRECOM;
+	private JButton btnEliminarCompra;
+	private JButton btnModificarCompraP;
+	private JButton btnBuscarComP;
+	private JLabel lblNewLabel_11;
+	private JButton btnNewButton_1;
 
 	/**
 	 * Launch the application.
@@ -424,14 +429,10 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			tabbedPane.addTab("PRODUCTOS", null, panel_3, null);
 			panel_3.setLayout(null);
 			{
-				lblNewLabel_1 = new JLabel("CODIGO:");
-				lblNewLabel_1.setBounds(10, 11, 63, 25);
-				panel_3.add(lblNewLabel_1);
-			}
-			{
 				txtNomPro = new JTextField();
 				txtNomPro.addKeyListener(new KeyAdapter() {
 					@Override
+					
 					public void keyTyped(KeyEvent e) {
 						
 						//PARA QUE PERMITA SOLAMENTE INGRESAR  LETRAS NO NUMEROS
@@ -442,18 +443,18 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 					        }
 					}
 				});
-				txtNomPro.setBounds(65, 47, 86, 20);
+				txtNomPro.setBounds(65, 11, 86, 20);
 				panel_3.add(txtNomPro);
 				txtNomPro.setColumns(10);
 			}
 			{
 				lblNewLabel_2 = new JLabel("NOMBRE: ");
-				lblNewLabel_2.setBounds(10, 47, 63, 25);
+				lblNewLabel_2.setBounds(10, 11, 63, 25);
 				panel_3.add(lblNewLabel_2);
 			}
 			{
 				lblNewLabel_3 = new JLabel("DESCRIPCIÓN:");
-				lblNewLabel_3.setBounds(172, 11, 79, 25);
+				lblNewLabel_3.setBounds(172, 11, 104, 25);
 				panel_3.add(lblNewLabel_3);
 			}
 			{
@@ -464,7 +465,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 						
 					}
 				});
-				txtDescripcion.setBounds(249, 13, 291, 54);
+				txtDescripcion.setBounds(261, 11, 291, 54);
 				txtDescripcion.setColumns(10);
 				panel_3.add(txtDescripcion);
 			}
@@ -475,7 +476,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 					public void keyTyped(KeyEvent e) {
 					}
 				});
-				lblNewLabel_4.setBounds(10, 78, 86, 25);
+				lblNewLabel_4.setBounds(10, 40, 86, 25);
 				panel_3.add(lblNewLabel_4);
 			}
 			{
@@ -492,12 +493,12 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 					}
 				});
 				txtPrecio.setColumns(10);
-				txtPrecio.setBounds(65, 78, 86, 20);
+				txtPrecio.setBounds(65, 40, 86, 20);
 				panel_3.add(txtPrecio);
 			}
 			{
 				lblNewLabel_5 = new JLabel("STOCK:");
-				lblNewLabel_5.setBounds(207, 78, 44, 25);
+				lblNewLabel_5.setBounds(10, 71, 44, 25);
 				panel_3.add(lblNewLabel_5);
 			}
 			{
@@ -514,14 +515,8 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 					}
 				});
 				txtStock.setColumns(10);
-				txtStock.setBounds(249, 80, 86, 20);
+				txtStock.setBounds(64, 73, 87, 20);
 				panel_3.add(txtStock);
-			}
-			{
-				txtCodigo = new JTextField();
-				txtCodigo.setColumns(10);
-				txtCodigo.setBounds(65, 13, 86, 20);
-				panel_3.add(txtCodigo);
 			}
 			
 			btnEliminar = new JButton("ELIMINAR");
@@ -544,6 +539,30 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 				JScrollPane scrollProductos = new JScrollPane(table);
 				scrollProductos.setBounds(10, 146, 799, 266);
 				panel_3.add(scrollProductos);
+				{
+					btnNewButton_1 = new JButton("BUSCAR / LISTAR");
+					btnNewButton_1.addActionListener(this);
+					btnNewButton_1.setBounds(360, 116, 130, 23);
+					panel_3.add(btnNewButton_1);
+				}
+				// AUTOCOMPLETAR CAMPOS AL SELECCIONAR FILA
+				table.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseClicked(MouseEvent e) {
+				        int fila = table.getSelectedRow();
+				        if (fila >= 0) {
+				            String nombre = table.getValueAt(fila, 1).toString();       // Nombre_PRO
+				            String descripcion = table.getValueAt(fila, 2).toString();  // Descripcion_PRO
+				            String precio = table.getValueAt(fila, 3).toString();       // Precio_venta
+				            String stock = table.getValueAt(fila, 4).toString();        // Stock_PRO
+
+				            txtNomPro.setText(nombre);
+				            txtDescripcion.setText(descripcion);
+				            txtPrecio.setText(precio);
+				            txtStock.setText(stock);
+				        }
+				    }
+				});
 			}
 			
 			JPanel panel_5 = new JPanel();
@@ -551,7 +570,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			panel_5.setLayout(null);
 			
 			cmbProveedor = new JComboBox<String>();
-			cmbProveedor.setBounds(511, 9, 86, 22);
+			cmbProveedor.setBounds(529, 9, 86, 22);
 			panel_5.add(cmbProveedor);
 			cmbProveedor.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
@@ -569,21 +588,21 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			});
 			
 			JLabel lblNewLabel_17 = new JLabel("PROVEEDOR:");
-			lblNewLabel_17.setBounds(444, 13, 69, 14);
+			lblNewLabel_17.setBounds(444, 13, 116, 14);
 			panel_5.add(lblNewLabel_17);
 			
 			txtNombreProveedor = new JTextField();
 			txtNombreProveedor.setEditable(false);
-			txtNombreProveedor.setBounds(607, 10, 96, 20);
+			txtNombreProveedor.setBounds(625, 10, 96, 20);
 			panel_5.add(txtNombreProveedor);
 			txtNombreProveedor.setColumns(10);
 			
 			JLabel lblNewLabel_18 = new JLabel("EMPLEADO:");
-			lblNewLabel_18.setBounds(444, 40, 63, 14);
+			lblNewLabel_18.setBounds(444, 40, 116, 14);
 			panel_5.add(lblNewLabel_18);
 			
 			cmbEmpleado = new JComboBox<String>();
-			cmbEmpleado.setBounds(511, 36, 86, 22);
+			cmbEmpleado.setBounds(518, 36, 86, 22);
 			panel_5.add(cmbEmpleado);
 			cmbEmpleado.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
@@ -609,11 +628,35 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			
 			tablaCompras = new JTable();
 			scrollPane.setViewportView(tablaCompras);
+			tablaCompras.getSelectionModel().addListSelectionListener(e -> {
+			    if (!e.getValueIsAdjusting() && tablaCompras.getSelectedRow() != -1) {
+			        int fila = tablaCompras.getSelectedRow();
+			        String nombreProducto = tablaCompras.getValueAt(fila, 6).toString(); // Columna PRODUCTO
+
+			        // Asignar directamente los valores de la tabla
+			        txtNOMPRO.setText(nombreProducto);
+			        txtCANT.setText(tablaCompras.getValueAt(fila, 7).toString());   // CANTIDAD
+			        txtPRECOM.setText(tablaCompras.getValueAt(fila, 8).toString()); // P COMPRA
+
+			        // Obtener descripción y precio venta del producto usando el nombre
+			        ArrayProductos daoProd = new ArrayProductos();
+			        ArrayList<Productos> lista = daoProd.ConsultarPorNombre(nombreProducto);
+
+			        if (!lista.isEmpty()) {
+			            Productos prod = lista.get(0);
+			            txtDES.setText(prod.getDescripción_PRO());
+			            txtPREVEN.setText(String.valueOf(prod.getPrecio_venta()));
+			        } else {
+			            txtDES.setText("");
+			            txtPREVEN.setText("");
+			        }
+			    }
+			});
 			{
 				txtNombreEmpleado = new JTextField();
 				txtNombreEmpleado.setEditable(false);
 				txtNombreEmpleado.setColumns(10);
-				txtNombreEmpleado.setBounds(607, 37, 96, 20);
+				txtNombreEmpleado.setBounds(614, 37, 89, 20);
 				panel_5.add(txtNombreEmpleado);
 			}
 			{
@@ -628,63 +671,86 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			{
 				btnNewButton = new JButton("REGISTRAR COMPRA");
 				btnNewButton.addActionListener(this);
-				btnNewButton.setBounds(98, 114, 135, 23);
+				btnNewButton.setBounds(10, 114, 175, 23);
 				panel_5.add(btnNewButton);
 			}
 			{
 				txtNOMPRO = new JTextField();
 				txtNOMPRO.setColumns(10);
-				txtNOMPRO.setBounds(75, 10, 86, 20);
+				txtNOMPRO.setBounds(85, 10, 86, 20);
 				panel_5.add(txtNOMPRO);
 			}
 			{
-				lblNewLabel_20 = new JLabel("NOMBRE: ");
-				lblNewLabel_20.setBounds(10, 9, 63, 22);
+				lblNewLabel_20 = new JLabel("PRODUCTO:");
+				lblNewLabel_20.setBounds(10, 9, 116, 22);
 				panel_5.add(lblNewLabel_20);
 			}
 			{
 				lblNewLabel_21 = new JLabel("PRECIO VENTA:");
-				lblNewLabel_21.setBounds(10, 33, 86, 25);
+				lblNewLabel_21.setBounds(10, 33, 116, 25);
 				panel_5.add(lblNewLabel_21);
 			}
 			{
 				txtPREVEN = new JTextField();
 				txtPREVEN.setColumns(10);
-				txtPREVEN.setBounds(98, 35, 63, 20);
+				txtPREVEN.setBounds(108, 35, 63, 20);
 				panel_5.add(txtPREVEN);
 			}
 			{
 				lblNewLabel_22 = new JLabel("DESCRIPCIÓN:");
-				lblNewLabel_22.setBounds(171, 9, 79, 22);
+				lblNewLabel_22.setBounds(181, 9, 153, 22);
 				panel_5.add(lblNewLabel_22);
 			}
 			{
 				txtDES = new JTextField();
 				txtDES.setColumns(10);
-				txtDES.setBounds(252, 8, 182, 46);
+				txtDES.setBounds(265, 8, 169, 46);
 				panel_5.add(txtDES);
 			}
 			{
 				lblNewLabel_23 = new JLabel("CANTIDAD:");
-				lblNewLabel_23.setBounds(171, 57, 69, 25);
+				lblNewLabel_23.setBounds(181, 57, 116, 25);
 				panel_5.add(lblNewLabel_23);
 			}
 			{
 				txtCANT = new JTextField();
 				txtCANT.setColumns(10);
-				txtCANT.setBounds(238, 59, 86, 20);
+				txtCANT.setBounds(248, 59, 86, 20);
 				panel_5.add(txtCANT);
 			}
 			{
 				lblNewLabel_24 = new JLabel("PRECIO COMPRA:");
-				lblNewLabel_24.setBounds(10, 57, 97, 25);
+				lblNewLabel_24.setBounds(10, 57, 116, 25);
 				panel_5.add(lblNewLabel_24);
 			}
 			{
 				txtPRECOM = new JTextField();
 				txtPRECOM.setColumns(10);
-				txtPRECOM.setBounds(108, 59, 53, 20);
+				txtPRECOM.setBounds(118, 59, 53, 20);
 				panel_5.add(txtPRECOM);
+			}
+			{
+				btnEliminarCompra = new JButton("ELIMINAR");
+				btnEliminarCompra.addActionListener(this);
+				btnEliminarCompra.setBounds(208, 114, 116, 23);
+				panel_5.add(btnEliminarCompra);
+			}
+			{
+				btnModificarCompraP = new JButton("MODIFICAR");
+				btnModificarCompraP.addActionListener(this);
+				btnModificarCompraP.setBounds(334, 114, 116, 23);
+				panel_5.add(btnModificarCompraP);
+			}
+			{
+				btnBuscarComP = new JButton("BUSCAR / LISTAR");
+				btnBuscarComP.addActionListener(this);
+				btnBuscarComP.setBounds(471, 114, 144, 23);
+				panel_5.add(btnBuscarComP);
+			}
+			{
+				lblNewLabel_11 = new JLabel("(N PRODUCTO)");
+				lblNewLabel_11.setBounds(505, 100, 86, 14);
+				panel_5.add(lblNewLabel_11);
 			}
 			{
 				ListarC("");
@@ -695,45 +761,37 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 		}	
 	}
 	
-	//INTERACTUAR CON LA TABLA PRODUCTOS
-	protected void do_table_mouseClicked(MouseEvent e) {
-		
-		int fila = table.getSelectedRow();
-		txtCodigo.setText(String.valueOf(table.getValueAt(fila, 0)));
-		txtNomPro.setText(String.valueOf(table.getValueAt(fila, 1)));
-		txtDescripcion.setText(String.valueOf(table.getValueAt(fila, 2)));
-		txtPrecio.setText(String.valueOf(table.getValueAt(fila, 3)));
-		txtStock.setText(String.valueOf(table.getValueAt(fila, 4)));	
-	}
+	
 	
 	//LISTAR PRODUCTOS
-	public void ListarP(String nom) 
-	{
-		DefaultTableModel modelo = new DefaultTableModel();
-		ArrayProductos p = new ArrayProductos();
-		ArrayList<Productos> lista = new ArrayList<Productos>();
-		if(nom.length()==0) lista=p.listarProductos();
-		else lista= p.consultarProductos(nom);	
-		modelo.setRowCount(lista.size());
-		Iterator<Productos> it = lista.iterator();
-		modelo.addColumn("Código");
-		modelo.addColumn("Nombre");
-		modelo.addColumn("Descripción");
-		modelo.addColumn("Precio");
-		modelo.addColumn("Stock");
-		int i=0;
-		while(it.hasNext())
-		{
-			Object obj= it.next();
-			Productos produc = (Productos) obj;
-			modelo.setValueAt(produc.getID_PRODUCTO(), i, 0);
-			modelo.setValueAt(produc.getNombre_PRO(), i, 1);
-			modelo.setValueAt(produc.getDescripción_PRO(), i, 2);
-			modelo.setValueAt(produc.getPrecio_venta(), i, 3);
-			modelo.setValueAt(produc.getStock_PRO(), i, 4);
-			i++;
-		}
-		table.setModel(modelo);
+	public void ListarP(String nom) {
+	    DefaultTableModel modelo = new DefaultTableModel();
+	    ArrayProductos p = new ArrayProductos();
+	    ArrayList<Productos> lista;
+
+	    if (nom.length() == 0) {
+	        lista = p.listarProductos();
+	    } else {
+	        lista = p.consultarProductos(nom);
+	    }
+
+	    modelo.addColumn("Código");
+	    modelo.addColumn("Nombre");
+	    modelo.addColumn("Descripción");
+	    modelo.addColumn("Precio");
+	    modelo.addColumn("Stock");
+
+	    for (Productos produc : lista) {
+	        Object[] fila = new Object[5];
+	        fila[0] = produc.getID_PRODUCTO();
+	        fila[1] = produc.getNombre_PRO();
+	        fila[2] = produc.getDescripción_PRO();
+	        fila[3] = produc.getPrecio_venta();
+	        fila[4] = produc.getStock_PRO();
+	        modelo.addRow(fila);
+	    }
+
+	    table.setModel(modelo);
 	}
 	
 	//LISTAR EMPLEADOS
@@ -821,6 +879,18 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 		}
 		
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnNewButton_1) {
+			do_btnNewButton_1_actionPerformed(e);
+		}
+		if (e.getSource() == btnBuscarComP) {
+			do_btnBuscarComP_actionPerformed(e);
+		}
+		if (e.getSource() == btnModificarCompraP) {
+			do_btnModificarCompraP_actionPerformed(e);
+		}
+		if (e.getSource() == btnEliminarCompra) {
+			do_btnEliminarCompra_actionPerformed(e);
+		}
 		if (e.getSource() == btnNewButton) {
 			do_btnNewButton_actionPerformed(e);
 		}
@@ -856,20 +926,30 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	//PROGRAMAMOS LA PESTAÑA PRODUCTOS
 	
 	protected void do_btnAgregar_actionPerformed(ActionEvent e) {
-		try 
-		{
-			Productos produc = new Productos(txtCodigo.getText(),txtNomPro.getText(),txtDescripcion.getText(),Double.parseDouble(txtPrecio.getText()),Integer.parseInt(txtStock.getText()));
-			ArrayProductos p = new ArrayProductos();
-			p.insertar(produc);
-			ListarP("");
-			LimpiarP();
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null,"Datos vacios");
-		}
-		LlenarComboEmpleadosSUPER(cmbEmpleado);
+		try {
+	        ArrayProductos dao = new ArrayProductos();
+	        String nuevoID = dao.generarNuevoIDProducto(); // Genera automáticamente el ID tipo A01, A02...
+
+	        Productos produc = new Productos(
+	            nuevoID,
+	            txtNomPro.getText(),
+	            txtDescripcion.getText(),
+	            Double.parseDouble(txtPrecio.getText()),
+	            Integer.parseInt(txtStock.getText())
+	        );
+
+	        dao.insertar(produc);
+	        ListarP("");
+	        LimpiarP();
+	        JOptionPane.showMessageDialog(null, "Producto agregado con ID: " + nuevoID);
+
+	    } catch (Exception e2) {
+	        JOptionPane.showMessageDialog(null, "Datos vacíos o inválidos");
+	    }
+
+	    LlenarComboEmpleadosSUPER(cmbEmpleado);
 	}
 	void LimpiarP() {
-		txtCodigo.setText("");
 		txtNomPro.setText("");
 		txtDescripcion.setText("");
 		txtPrecio.setText("");
@@ -877,27 +957,59 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	}	
 	protected void do_btnModificar_actionPerformed(ActionEvent e) 
 	{
-		try 
-		{		
-			Productos produc = new Productos(txtCodigo.getText(),txtNomPro.getText(),txtDescripcion.getText(),Double.parseDouble(txtPrecio.getText()),Integer.parseInt(txtStock.getText()));
-			ArrayProductos p = new ArrayProductos();
-			p.editar(produc);
-			ListarP("");
-			LimpiarP();
-		} catch (Exception e2) {
+		try {
+	        String nombre = txtNomPro.getText().trim();
+	        String descripcion = txtDescripcion.getText().trim();
+	        double precioVenta = Double.parseDouble(txtPrecio.getText());
+	        int stock = Integer.parseInt(txtStock.getText());
 
-			JOptionPane.showMessageDialog(null,"Datos vacios");
-		}
+	        ArrayProductos dao = new ArrayProductos();
+	        ArrayList<Productos> lista = dao.ConsultarPorNombre(nombre);
+
+	        if (lista.isEmpty()) {
+	            JOptionPane.showMessageDialog(null, "No se encontró el producto con ese nombre.");
+	            return;
+	        }
+
+	        // Obtener el ID real del producto
+	        String idProducto = lista.get(0).getID_PRODUCTO();
+
+	        // Crear el objeto actualizado
+	        Productos p = new Productos(idProducto, nombre, descripcion, precioVenta, stock);
+
+	        // Modificar el producto
+	        dao.editar(p);
+	        ListarP("");
+	        LimpiarP();
+
+	        JOptionPane.showMessageDialog(null, "Producto modificado correctamente.");
+	    } catch (Exception e2) {
+	        JOptionPane.showMessageDialog(null, "Error al modificar producto: " + e2.getMessage());
+	    }
 	}
 	protected void do_btnEliminar_actionPerformed(ActionEvent e) 
 	{
-		ArrayProductos eliminar= new ArrayProductos();
-		eliminar.eliminar(txtCodigo.getText());
-		ListarP("");
-		LimpiarP();
+		try {
+	        String nombre = txtNomPro.getText().trim();
+	        if (nombre.isEmpty()) {
+	            JOptionPane.showMessageDialog(null, "Ingrese el nombre del producto a eliminar.");
+	            return;
+	        }
+
+	        ArrayProductos eliminar = new ArrayProductos();
+	        eliminar.eliminarPorNombre(nombre);
+	        ListarP("");
+	        LimpiarP();
+	        JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
+	    } catch (Exception ex) {
+	        JOptionPane.showMessageDialog(null, "Error al eliminar: " + ex.getMessage());
+	    }
 	}
 	
-	
+	protected void do_btnNewButton_1_actionPerformed(ActionEvent e) {
+		String nombre = txtNomPro.getText().trim();
+	    ListarP(nombre);
+	}
 	//PROGRMAMOS LA PANTALLA DE EMPLEADOS
 	
 	protected void do_btnAgregarE_actionPerformed(ActionEvent e) 
@@ -1000,7 +1112,6 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	public void ListarC(String nom) {
 	    DefaultTableModel modelo = new DefaultTableModel();
 	    ArrayComprasProductos ac = new ArrayComprasProductos();
-	    ArrayProductos productosDAO = new ArrayProductos();
 	    ArrayEmpleados empleadosDAO = new ArrayEmpleados();
 	    ArrayProveedor proveedoresDAO = new ArrayProveedor();
 
@@ -1009,16 +1120,16 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	    if (nom.length() == 0) {
 	        listaC = ac.Listar();
 	    } else {
-	        listaC = ac.ConsultarPorID(nom);
+	        listaC = ac.ConsultarPorNombreProducto(nom);
 	    }
 
 	    modelo.addColumn("ID COMPRA");
 	    modelo.addColumn("RUC PROV");
-	    modelo.addColumn("NOM PROV");  // solo visual
+	    modelo.addColumn("NOM PROV");   // visual
 	    modelo.addColumn("DNI EMP");
-	    modelo.addColumn("NOM EMP");   // solo visual
+	    modelo.addColumn("NOM EMP");    // visual
 	    modelo.addColumn("FECHA");
-	    modelo.addColumn("PRODUCTO");  // solo visual
+	    modelo.addColumn("PRODUCTO");   
 	    modelo.addColumn("CANTIDAD");
 	    modelo.addColumn("P COMPRA");
 	    modelo.addColumn("TOTAL");
@@ -1026,9 +1137,8 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	    for (ComprasProductos c : listaC) {
 	        String nombreEmpleado = "";
 	        String nombreProveedor = "";
-	        String nombreProducto = "";
 
-	        //Buscar nombre del empleado
+	        // Buscar nombre del empleado
 	        for (Empleados emp : empleadosDAO.ListarEmpleados()) {
 	            if (emp.getID_EMPLEADO().equals(c.getID_EMPLEADO())) {
 	                nombreEmpleado = emp.getNombre_EMP();
@@ -1036,18 +1146,10 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	            }
 	        }
 
-	        //Buscar nombre del proveedor
+	        // Buscar nombre del proveedor
 	        for (Proveedor prov : proveedoresDAO.ListarProveedores()) {
 	            if (prov.getID_PROVEEDOR().equals(c.getID_PROVEEDOR())) {
 	                nombreProveedor = prov.getNombre_PROV();
-	                break;
-	            }
-	        }
-
-	        //Buscar producto que tenga exactamente la cantidad registrada (solo como visual)
-	        for (Productos p : productosDAO.listarProductos()) {
-	            if (p.getStock_PRO() == c.getCantidad_COM_PRO()) {
-	                nombreProducto = p.getNombre_PRO();
 	                break;
 	            }
 	        }
@@ -1059,7 +1161,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	        fila[3] = c.getID_EMPLEADO();
 	        fila[4] = nombreEmpleado;
 	        fila[5] = c.getFecha_COM_PRO();
-	        fila[6] = nombreProducto;
+	        fila[6] = c.getNOMBRE_PRO();  
 	        fila[7] = c.getCantidad_COM_PRO();
 	        fila[8] = c.getPrecioC_COM_PRO();
 	        fila[9] = c.getTotal_COM();
@@ -1096,26 +1198,27 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	        String idProducto;
 
 	        if (!existe.isEmpty()) {
-	            //Producto ya existe → solo actualiza stock
+	            // Producto ya existe → solo actualizar stock
 	            idProducto = existe.get(0).getID_PRODUCTO();
 	            daoProd.ActualizarStock(idProducto, cantidad);
 	        } else {
-	            //Producto nuevo → generar ID de PRODUCTO y registrar
-	            idProducto = daoProd.generarNuevoIDProducto();  //ID tipo A01, A02, etc.
+	            // Producto nuevo → generar ID de PRODUCTO y registrar
+	            idProducto = daoProd.generarNuevoIDProducto();  // tipo A01, A02, etc.
 	            Productos nuevo = new Productos(idProducto, nombre, descripcion, precioVenta, cantidad);
 	            daoProd.insertar(nuevo);
 	        }
 
 	        //Generar ID de compra
 	        ArrayComprasProductos daoCompra = new ArrayComprasProductos();
-	        String idCompra = daoCompra.generarNuevoIDCompra();  // ID tipo CP01, CP02...
+	        String idCompra = daoCompra.generarNuevoIDCompra();  // tipo CP01, CP02, etc.
 
-	        //Crear objeto de compra y registrar en tabla COMPRA_PRODUCTOS
+	        //Crear objeto y registrar en tabla COMPRA_PRODUCTOS 
 	        ComprasProductos cp = new ComprasProductos(
 	            idCompra,
 	            idProveedor,
 	            idEmpleado,
-	            null,  // Fecha se autogenera
+	            nombre,      
+	            null,        // Fecha autogenerada en DB
 	            cantidad,
 	            precioCompra,
 	            total
@@ -1130,15 +1233,160 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	        txtCANT.setText("");
 	        txtPRECOM.setText("");
 
-	        //Actualizar visualización
-	        ListarC("");   // Tabla de compras
-	        ListarP("");   // Tabla de productos
-
+	        //Actualizar tablas
+	        ListarC("");
+	        ListarP("");
+	        
+	        //Confirmación
 	        JOptionPane.showMessageDialog(null, "Compra registrada correctamente.");
 
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	        JOptionPane.showMessageDialog(null, "Error al registrar compra: " + ex.getMessage());
 	    }
+	}
+	protected void do_btnEliminarCompra_actionPerformed(ActionEvent e) {
+		try {
+	        int fila = tablaCompras.getSelectedRow();
+	        if (fila == -1) {
+	            JOptionPane.showMessageDialog(null, "Seleccione una fila para eliminar.");
+	            return;
+	        }
+
+	        String idCompra = tablaCompras.getValueAt(fila, 0).toString();          // ID_COMPRA
+	        String nombreProducto = tablaCompras.getValueAt(fila, 6).toString();    // NOMBRE_PRO
+	        int cantidadComprada = Integer.parseInt(tablaCompras.getValueAt(fila, 7).toString());  // Cantidad
+
+	        // Buscar el producto por nombre
+	        ArrayProductos daoProd = new ArrayProductos();
+	        ArrayList<Productos> productos = daoProd.ConsultarPorNombre(nombreProducto);
+
+	        if (productos.isEmpty()) {
+	            JOptionPane.showMessageDialog(null, "Producto no encontrado en la base de datos.");
+	            return;
+	        }
+
+	        Productos producto = productos.get(0);
+	        String idProducto = producto.getID_PRODUCTO();
+	        int stockActual = producto.getStock_PRO();
+	        int stockRestante = stockActual - cantidadComprada;
+
+	        // ✅ Validación: no permitir stock negativo
+	        if (stockRestante < 0) {
+	            JOptionPane.showMessageDialog(null, "No se puede eliminar la compra. El stock quedaría negativo.");
+	            return;
+	        }
+
+	        if (stockRestante == 0) {
+	            // Eliminar producto completamente
+	            daoProd.eliminarPorNombre(nombreProducto);
+	        } else {
+	            // Restar del stock
+	            daoProd.ActualizarStock(idProducto, -cantidadComprada);
+	        }
+
+	        // Eliminar la compra
+	        ArrayComprasProductos daoCompra = new ArrayComprasProductos();
+	        daoCompra.Eliminar(idCompra);
+
+	        // Actualizar tablas
+	        ListarC("");
+	        ListarP("");
+
+	        JOptionPane.showMessageDialog(null, "Compra eliminada correctamente.");
+
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        JOptionPane.showMessageDialog(null, "Error al eliminar: " + ex.getMessage());
+	    }
+	}
+	protected void do_btnModificarCompraP_actionPerformed(ActionEvent e) {
+		try {
+            int fila = tablaCompras.getSelectedRow();
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(null, "Seleccione una fila para modificar.");
+                return;
+            }
+
+            // Obtener ID de la compra seleccionada
+            String idCompra = tablaCompras.getValueAt(fila, 0).toString();
+
+            // Datos actualizados desde los txt
+            String nombre = txtNOMPRO.getText().trim();
+            String descripcion = txtDES.getText().trim();
+            double precioVenta = Double.parseDouble(txtPREVEN.getText());
+            int nuevaCantidad = Integer.parseInt(txtCANT.getText());
+            double nuevoPrecioCompra = Double.parseDouble(txtPRECOM.getText());
+            double nuevoTotal = nuevaCantidad * nuevoPrecioCompra;
+
+            // Datos de proveedor y empleado
+            String idProveedor = (String) cmbProveedor.getSelectedItem();
+            String idEmpleado = (String) cmbEmpleado.getSelectedItem();
+
+            // Buscar producto por nombre
+            ArrayProductos daoProd = new ArrayProductos();
+            ArrayList<Productos> lista = daoProd.ConsultarPorNombre(nombre);
+
+            if (lista.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No se encontró el producto a modificar.");
+                return;
+            }
+
+            String idProducto = lista.get(0).getID_PRODUCTO();
+            int stockActual = lista.get(0).getStock_PRO();
+
+            // Obtener datos originales
+            ArrayComprasProductos daoCompra = new ArrayComprasProductos();
+            ArrayList<ComprasProductos> listaOriginal = daoCompra.ConsultarPorID(idCompra);
+
+            if (listaOriginal.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No se encontró la compra original.");
+                return;
+            }
+
+            ComprasProductos compraOriginal = listaOriginal.get(0);
+            int cantidadOriginal = compraOriginal.getCantidad_COM_PRO();
+
+            // Calcular diferencia para ajustar stock
+            int diferenciaCantidad = nuevaCantidad - cantidadOriginal;
+            int nuevoStock = stockActual + diferenciaCantidad;
+
+            if (nuevoStock < 0) {
+                JOptionPane.showMessageDialog(null, "No se puede modificar. El stock quedaría negativo.");
+                return;
+            }
+
+            // Actualizar compra
+            ComprasProductos nuevaCompra = new ComprasProductos(
+                idCompra,
+                idProveedor,
+                idEmpleado,
+                nombre,
+                null,
+                nuevaCantidad,
+                nuevoPrecioCompra,
+                nuevoTotal
+            );
+            daoCompra.Editar(nuevaCompra);
+
+            // Actualizar stock y precio en PRODUCTOS
+            daoProd.ActualizarStock(idProducto, diferenciaCantidad);
+            daoProd.ActualizarPrecioVenta(idProducto, precioVenta); // Método adicional que ya te pasé
+
+            JOptionPane.showMessageDialog(null, "Compra modificada correctamente.");
+            ListarC("");
+            ListarP("");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al modificar: " + ex.getMessage());
+        }
+	}
+	protected void do_btnBuscarComP_actionPerformed(ActionEvent e) {
+		String nombre = txtNOMPRO.getText().trim();
+        if (!nombre.isEmpty()) {
+            ListarC(nombre);
+        } else {
+            ListarC(""); // Mostrar todo si está vacío
+        }
 	}
 }

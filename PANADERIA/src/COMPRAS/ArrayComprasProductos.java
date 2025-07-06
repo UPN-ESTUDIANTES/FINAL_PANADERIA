@@ -2,6 +2,7 @@ package COMPRAS;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -20,10 +21,11 @@ public class ArrayComprasProductos {
                     rs.getString(1), // ID_COMPRA
                     rs.getString(2), // ID_PROVEEDOR
                     rs.getString(3), // ID_EMPLEADO
-                    rs.getString(4), // Fecha_COM_PRO
-                    rs.getInt(5),    // Cantidad_COM_PRO
-                    rs.getDouble(6), // PrecioC_COM_PRO
-                    rs.getDouble(7)  // Total_COM_PRO
+                    rs.getString(4), // NOMBRE_PRO
+                    rs.getString(5), // Fecha_COM_PRO
+                    rs.getInt(6),    // Cantidad_COM_PRO
+                    rs.getDouble(7), // PrecioC_COM_PRO
+                    rs.getDouble(8)  // Total_COM_PRO
                 );
                 lista.add(com);
             }
@@ -41,13 +43,14 @@ public class ArrayComprasProductos {
             ComprasProductos com;
             while (rs.next()) {
                 com = new ComprasProductos(
-                    rs.getString(1), // ID_COMPRA
-                    rs.getString(2), // ID_PROVEEDOR
-                    rs.getString(3), // ID_EMPLEADO
-                    rs.getString(4), // Fecha_COM_PRO
-                    rs.getInt(5),    // Cantidad_COM_PRO
-                    rs.getDouble(6), // PrecioC_COM_PRO
-                    rs.getDouble(7)  // Total_COM_PRO
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getInt(6),
+                    rs.getDouble(7),
+                    rs.getDouble(8)
                 );
                 lista.add(com);
             }
@@ -67,13 +70,14 @@ public class ArrayComprasProductos {
             ComprasProductos com;
             while (rs.next()) {
                 com = new ComprasProductos(
-                    rs.getString(1), // ID_COMPRA
-                    rs.getString(2), // ID_PROVEEDOR
-                    rs.getString(3), // ID_EMPLEADO
-                    rs.getString(4), // Fecha_COM_PRO
-                    rs.getInt(5),    // Cantidad_COM_PRO
-                    rs.getDouble(6), // PrecioC_COM_PRO
-                    rs.getDouble(7)  // Total_COM_PRO
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getInt(6),
+                    rs.getDouble(7),
+                    rs.getDouble(8)
                 );
                 lista.add(com);
             }
@@ -84,19 +88,20 @@ public class ArrayComprasProductos {
     }
 
     public void Insertar(ComprasProductos c) {
-    	try {
-    		Connection cnx = ConexiónMySQL.getConexión();
-    		CallableStatement csta = cnx.prepareCall("{call SP_Insertar_COM_PRO(?,?,?,?,?,?)}");
-    		csta.setString(1, c.getID_COMPRA());
-    		csta.setString(2, c.getID_PROVEEDOR());
-    		csta.setString(3, c.getID_EMPLEADO());
-    		csta.setInt(4, c.getCantidad_COM_PRO());
-    		csta.setDouble(5, c.getPrecioC_COM_PRO());
-    		csta.setDouble(6, c.getTotal_COM());
-    		csta.executeUpdate();
-    	} catch (Exception e) {
-    		System.out.println("ERROR: " + e);
-    	}
+        try {
+            Connection cnx = ConexiónMySQL.getConexión();
+            CallableStatement csta = cnx.prepareCall("{call SP_Insertar_COM_PRO(?,?,?,?,?,?,?)}");
+            csta.setString(1, c.getID_COMPRA());
+            csta.setString(2, c.getID_PROVEEDOR());
+            csta.setString(3, c.getID_EMPLEADO());
+            csta.setString(4, c.getNOMBRE_PRO());
+            csta.setInt(5, c.getCantidad_COM_PRO());
+            csta.setDouble(6, c.getPrecioC_COM_PRO());
+            csta.setDouble(7, c.getTotal_COM());
+            csta.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e);
+        }
     }
 
     public void Eliminar(String id) {
@@ -115,31 +120,57 @@ public class ArrayComprasProductos {
             Connection cnx = ConexiónMySQL.getConexión();
             CallableStatement csta = cnx.prepareCall("{call SP_Editar_COM_PRO(?,?,?,?,?,?,?)}");
             csta.setString(1, c.getID_COMPRA());
-    		csta.setString(2, c.getID_PROVEEDOR());
-    		csta.setString(3, c.getID_EMPLEADO());
-    		csta.setInt(4, c.getCantidad_COM_PRO());
-    		csta.setDouble(5, c.getPrecioC_COM_PRO());
-    		csta.setDouble(6, c.getTotal_COM());
-    		csta.executeUpdate();
+            csta.setString(2, c.getID_PROVEEDOR());
+            csta.setString(3, c.getID_EMPLEADO());
+            csta.setString(4, c.getNOMBRE_PRO());
+            csta.setInt(5, c.getCantidad_COM_PRO());
+            csta.setDouble(6, c.getPrecioC_COM_PRO());
+            csta.setDouble(7, c.getTotal_COM());
+            csta.executeUpdate();
         } catch (Exception e) {
             System.out.println("ERROR: " + e);
         }
     }
+    
+    public ArrayList<ComprasProductos> ConsultarPorNombreProducto(String nombre) {
+        ArrayList<ComprasProductos> lista = new ArrayList<>();
+        try {
+            Connection cnx = ConexiónMySQL.getConexión();
+            PreparedStatement pst = cnx.prepareStatement("SELECT * FROM COMPRA_PRODUCTOS WHERE NOMBRE_PRO LIKE ?");
+            pst.setString(1, "%" + nombre + "%");
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                ComprasProductos com = new ComprasProductos(
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getInt(6),
+                    rs.getDouble(7),
+                    rs.getDouble(8)
+                );
+                lista.add(com);
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR al buscar por nombre producto: " + e);
+        }
+        return lista;
+    }
+    
     public String generarNuevoIDCompra() {
         String nuevoID = "CP01";
         String sql = "SELECT MAX(ID_COMPRA) FROM COMPRA_PRODUCTOS WHERE ID_COMPRA LIKE 'CP%'";
-        
         try {
             Connection cnx = ConexiónMySQL.getConexión();
             Statement stmt = cnx.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            
             if (rs.next()) {
-                String ultimoID = rs.getString(1); // Ejemplo: "CP07"
+                String ultimoID = rs.getString(1); // CP07
                 if (ultimoID != null) {
-                    int num = Integer.parseInt(ultimoID.substring(2)); // Extrae "07" → 7
-                    num++; // Incrementa a 8
-                    nuevoID = String.format("CP%02d", num); // Formatea a "CP08"
+                    int num = Integer.parseInt(ultimoID.substring(2));
+                    num++;
+                    nuevoID = String.format("CP%02d", num);
                 }
             }
             rs.close();
@@ -147,7 +178,6 @@ public class ArrayComprasProductos {
         } catch (Exception e) {
             System.out.println("ERROR al generar nuevo ID de compra: " + e);
         }
-        
         return nuevoID;
     }
 }
