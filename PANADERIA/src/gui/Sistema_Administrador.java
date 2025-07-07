@@ -1097,6 +1097,15 @@ public class Sistema_Administrador extends JFrame implements ActionListener, Key
 	{
 		try 
 		{		
+		    String email = txtEmail.getText().trim();
+
+		    // Validar que el campo email no esté vacío y contenga arroba
+		    if (email.isEmpty() || !email.contains("@")) {
+		         JOptionPane.showMessageDialog(null, "Falta el arroba en el correo electrónico.", "Error", JOptionPane.WARNING_MESSAGE);
+		         txtEmail.requestFocus();
+		         return; // Detiene el proceso si el email no es válido
+		    }
+		       
 			Proveedor provee = new Proveedor(txtRuc.getText(),txtEmpresa.getText(),txtTelefono.getText(),txtEmail.getText(),txtDireccion.getText(),txtDistrito.getText());
 			ArrayProveedor PV = new ArrayProveedor();
 			PV.Insertar(provee);
