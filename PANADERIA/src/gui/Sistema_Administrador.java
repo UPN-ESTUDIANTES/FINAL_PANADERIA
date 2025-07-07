@@ -332,22 +332,22 @@ public class Sistema_Administrador extends JFrame implements ActionListener, Key
 				panel_4.setLayout(null);
 				{
 					lblNewLabel_13 = new JLabel("RUC 20:");
-					lblNewLabel_13.setBounds(10, 11, 63, 25);
+					lblNewLabel_13.setBounds(10, 11, 82, 25);
 					panel_4.add(lblNewLabel_13);
 				}
 				{
 					lblNewLabel_14 = new JLabel("EMPRESA: ");
-					lblNewLabel_14.setBounds(10, 46, 63, 25);
+					lblNewLabel_14.setBounds(10, 46, 82, 25);
 					panel_4.add(lblNewLabel_14);
 				}
 				{
 					lblNewLabel_15 = new JLabel("TELÉFONO:");
-					lblNewLabel_15.setBounds(177, 11, 77, 25);
+					lblNewLabel_15.setBounds(198, 11, 108, 25);
 					panel_4.add(lblNewLabel_15);
 				}
 				{
 					lblNewLabel_16 = new JLabel("DIRECCIÓN:");
-					lblNewLabel_16.setBounds(179, 46, 75, 25);
+					lblNewLabel_16.setBounds(200, 46, 106, 25);
 					panel_4.add(lblNewLabel_16);
 				}
 				{
@@ -361,14 +361,15 @@ public class Sistema_Administrador extends JFrame implements ActionListener, Key
 						        }
 						}
 					});
-					txtRuc.setBounds(67, 13, 86, 20);
+					txtRuc.setBounds(102, 11, 86, 20);
 					panel_4.add(txtRuc);
 					txtRuc.setColumns(10);
 				}
 				{
 					txtEmpresa = new JTextField();
+					txtEmpresa.addKeyListener(this);
 					txtEmpresa.setColumns(10);
-					txtEmpresa.setBounds(67, 48, 86, 20);
+					txtEmpresa.setBounds(102, 46, 86, 20);
 					panel_4.add(txtEmpresa);
 				}
 				{
@@ -386,31 +387,31 @@ public class Sistema_Administrador extends JFrame implements ActionListener, Key
 						}
 					});
 					txtTelefono.setColumns(10);
-					txtTelefono.setBounds(252, 14, 100, 20);
+					txtTelefono.setBounds(316, 14, 100, 20);
 					panel_4.add(txtTelefono);
 				}
 				{
 					txtDireccion = new JTextField();
 					txtDireccion.setColumns(10);
-					txtDireccion.setBounds(252, 49, 100, 20);
+					txtDireccion.setBounds(316, 46, 100, 20);
 					panel_4.add(txtDireccion);
 				}
 				{
 					btnAgregarProve = new JButton("AGREGAR");
 					btnAgregarProve.addActionListener(this);
-					btnAgregarProve.setBounds(380, 12, 89, 23);
+					btnAgregarProve.setBounds(426, 12, 126, 23);
 					panel_4.add(btnAgregarProve);
 				}
 				{
 					btnModificarProve = new JButton("MODIFICAR");
 					btnModificarProve.addActionListener(this);
-					btnModificarProve.setBounds(479, 12, 95, 23);
+					btnModificarProve.setBounds(574, 12, 126, 23);
 					panel_4.add(btnModificarProve);
 				}
 				{
 					btnEliminarProve = new JButton("ELIMINAR");
 					btnEliminarProve.addActionListener(this);
-					btnEliminarProve.setBounds(424, 47, 89, 23);
+					btnEliminarProve.setBounds(499, 47, 134, 23);
 					panel_4.add(btnEliminarProve);
 				}
 				{
@@ -421,21 +422,22 @@ public class Sistema_Administrador extends JFrame implements ActionListener, Key
 				}
 				
 				JLabel lblNewLabel_14_1 = new JLabel("EMAIL:");
-				lblNewLabel_14_1.setBounds(10, 79, 63, 25);
+				lblNewLabel_14_1.setBounds(10, 79, 82, 25);
 				panel_4.add(lblNewLabel_14_1);
 				
 				JLabel lblNewLabel_14_1_1 = new JLabel("DISTRITO:");
-				lblNewLabel_14_1_1.setBounds(179, 81, 75, 25);
+				lblNewLabel_14_1_1.setBounds(200, 81, 106, 25);
 				panel_4.add(lblNewLabel_14_1_1);
 				
 				txtEmail = new JTextField();
+				txtEmail.addKeyListener(this);
 				txtEmail.setColumns(10);
-				txtEmail.setBounds(67, 78, 86, 20);
+				txtEmail.setBounds(102, 76, 86, 20);
 				panel_4.add(txtEmail);
 				
 				txtDistrito = new JTextField();
 				txtDistrito.setColumns(10);
-				txtDistrito.setBounds(252, 79, 100, 20);
+				txtDistrito.setBounds(316, 76, 100, 20);
 				panel_4.add(txtDistrito);
 			}
 			panel_3 = new JPanel();
@@ -1424,6 +1426,12 @@ public class Sistema_Administrador extends JFrame implements ActionListener, Key
 	public void keyReleased(KeyEvent e) {
 	}
 	public void keyTyped(KeyEvent e) {
+		if (e.getSource() == txtEmail) {
+			do_txtEmail_keyTyped(e);
+		}
+		if (e.getSource() == txtEmpresa) {
+			do_txtEmpresa_keyTyped(e);
+		}
 		if (e.getSource() == txtCANT) {
 			do_txtCANT_keyTyped(e);
 		}
@@ -1489,5 +1497,15 @@ public class Sistema_Administrador extends JFrame implements ActionListener, Key
 		    if (textoActual.length() >= 5) {
 		        e.consume(); // Bloquea si supera el límite
 		    }
+	}
+	protected void do_txtEmpresa_keyTyped(KeyEvent e) {
+	    char c = e.getKeyChar();
+
+	    // Permitir letras, números y espacio
+	    if (!Character.isLetterOrDigit(c) && c != ' ') {
+	        e.consume(); // Bloquea símbolos y caracteres especiales
+	    }
+	}
+	protected void do_txtEmail_keyTyped(KeyEvent e) {
 	}
 }
