@@ -217,6 +217,18 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 				}
 				{
 					txtCodE = new JTextField();
+					txtCodE.addKeyListener(new KeyAdapter() {
+						@Override
+						public void keyTyped(KeyEvent e) {
+						    // Obtén el carácter ingresado
+						    char c = e.getKeyChar();
+						    
+						    // Verifica si el carácter es un número y si no se han ingresado más de 8 dígitos
+						    if (!Character.isDigit(c) || ((e.getComponent() instanceof JTextField) && ((JTextField) e.getComponent()).getText().length() >= 8)) {
+						        e.consume(); // Bloquea el carácter
+						    }
+						}
+					});
 					txtCodE.setBounds(67, 8, 86, 20);
 					panel_2.add(txtCodE);
 					txtCodE.setColumns(10);
