@@ -37,9 +37,10 @@ import javax.swing.JScrollPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.event.KeyListener;
 
 
-public class Sistema_Administrador extends JFrame implements ActionListener {
+public class Sistema_Administrador extends JFrame implements ActionListener, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -187,32 +188,32 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 				panel_2.setLayout(null);
 				{
 					lblNewLabel_6 = new JLabel("DNI:");
-					lblNewLabel_6.setBounds(10, 11, 45, 14);
+					lblNewLabel_6.setBounds(10, 11, 79, 14);
 					panel_2.add(lblNewLabel_6);
 				}
 				{
 					lblNewLabel_7 = new JLabel("NOMBRE:");
-					lblNewLabel_7.setBounds(10, 36, 63, 25);
+					lblNewLabel_7.setBounds(10, 36, 89, 25);
 					panel_2.add(lblNewLabel_7);
 				}
 				{
 					lblNewLabel_8 = new JLabel("APELLIDO:");
-					lblNewLabel_8.setBounds(10, 66, 63, 25);
+					lblNewLabel_8.setBounds(10, 66, 79, 25);
 					panel_2.add(lblNewLabel_8);
 				}
 				{
 					lblNewLabel_9 = new JLabel("CARGO:");
-					lblNewLabel_9.setBounds(185, 6, 63, 25);
+					lblNewLabel_9.setBounds(221, 6, 77, 25);
 					panel_2.add(lblNewLabel_9);
 				}
 				{
 					lblNewLabel_10 = new JLabel("SALARIO:");
-					lblNewLabel_10.setBounds(185, 36, 63, 25);
+					lblNewLabel_10.setBounds(218, 36, 89, 25);
 					panel_2.add(lblNewLabel_10);
 				}
 				{
 					lblNewLabel_12 = new JLabel("AFILIACIÓN:");
-					lblNewLabel_12.setBounds(185, 72, 86, 25);
+					lblNewLabel_12.setBounds(221, 66, 86, 25);
 					panel_2.add(lblNewLabel_12);
 				}
 				{
@@ -229,7 +230,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 						    }
 						}
 					});
-					txtCodE.setBounds(67, 8, 86, 20);
+					txtCodE.setBounds(99, 9, 86, 20);
 					panel_2.add(txtCodE);
 					txtCodE.setColumns(10);
 				}
@@ -249,7 +250,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 						}
 					});
 					txtNomE.setColumns(10);
-					txtNomE.setBounds(67, 38, 86, 20);
+					txtNomE.setBounds(99, 39, 86, 20);
 					panel_2.add(txtNomE);
 				}
 				{
@@ -267,13 +268,13 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 						}
 					});
 					txtApelli.setColumns(10);
-					txtApelli.setBounds(67, 72, 86, 20);
+					txtApelli.setBounds(99, 69, 86, 20);
 					panel_2.add(txtApelli);
 				}
 				{
 					cboCargo = new JComboBox();
 					cboCargo.setModel(new DefaultComboBoxModel(new String[] {"VENDEDOR", "PANADERO", "SUPERVISOR"}));
-					cboCargo.setBounds(256, 7, 80, 22);
+					cboCargo.setBounds(308, 7, 80, 22);
 					panel_2.add(cboCargo);
 				}
 				{
@@ -290,32 +291,32 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 						        }
 						}
 					});
-					txtSalario.setBounds(258, 38, 80, 20);
+					txtSalario.setBounds(308, 39, 80, 20);
 					panel_2.add(txtSalario);
 					txtSalario.setColumns(10);
 				}
 				{
 					cboAfiliacion = new JComboBox();
 					cboAfiliacion.setModel(new DefaultComboBoxModel(new String[] {"AFP", "ONP"}));
-					cboAfiliacion.setBounds(256, 73, 80, 22);
+					cboAfiliacion.setBounds(308, 67, 80, 22);
 					panel_2.add(cboAfiliacion);
 				}
 				{
 					btnAgregarE = new JButton("AGREGAR");
 					btnAgregarE.addActionListener(this);
-					btnAgregarE.setBounds(366, 37, 89, 23);
+					btnAgregarE.setBounds(425, 37, 116, 23);
 					panel_2.add(btnAgregarE);
 				}
 				{
 					btnModificarE = new JButton("EDITAR");
 					btnModificarE.addActionListener(this);
-					btnModificarE.setBounds(366, 67, 174, 23);
+					btnModificarE.setBounds(452, 67, 188, 23);
 					panel_2.add(btnModificarE);
 				}
 				{
 					btnEliminarE = new JButton("ELIMINAR");
 					btnEliminarE.addActionListener(this);
-					btnEliminarE.setBounds(451, 37, 89, 23);
+					btnEliminarE.setBounds(551, 37, 116, 23);
 					panel_2.add(btnEliminarE);
 				}
 				{
@@ -341,12 +342,12 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 				}
 				{
 					lblNewLabel_15 = new JLabel("TELÉFONO:");
-					lblNewLabel_15.setBounds(163, 11, 63, 25);
+					lblNewLabel_15.setBounds(177, 11, 77, 25);
 					panel_4.add(lblNewLabel_15);
 				}
 				{
 					lblNewLabel_16 = new JLabel("DIRECCIÓN:");
-					lblNewLabel_16.setBounds(163, 46, 63, 25);
+					lblNewLabel_16.setBounds(179, 46, 75, 25);
 					panel_4.add(lblNewLabel_16);
 				}
 				{
@@ -385,31 +386,31 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 						}
 					});
 					txtTelefono.setColumns(10);
-					txtTelefono.setBounds(236, 13, 100, 20);
+					txtTelefono.setBounds(252, 14, 100, 20);
 					panel_4.add(txtTelefono);
 				}
 				{
 					txtDireccion = new JTextField();
 					txtDireccion.setColumns(10);
-					txtDireccion.setBounds(236, 48, 100, 20);
+					txtDireccion.setBounds(252, 49, 100, 20);
 					panel_4.add(txtDireccion);
 				}
 				{
 					btnAgregarProve = new JButton("AGREGAR");
 					btnAgregarProve.addActionListener(this);
-					btnAgregarProve.setBounds(346, 12, 89, 23);
+					btnAgregarProve.setBounds(380, 12, 89, 23);
 					panel_4.add(btnAgregarProve);
 				}
 				{
 					btnModificarProve = new JButton("MODIFICAR");
 					btnModificarProve.addActionListener(this);
-					btnModificarProve.setBounds(445, 12, 95, 23);
+					btnModificarProve.setBounds(479, 12, 95, 23);
 					panel_4.add(btnModificarProve);
 				}
 				{
 					btnEliminarProve = new JButton("ELIMINAR");
 					btnEliminarProve.addActionListener(this);
-					btnEliminarProve.setBounds(346, 47, 89, 23);
+					btnEliminarProve.setBounds(424, 47, 89, 23);
 					panel_4.add(btnEliminarProve);
 				}
 				{
@@ -424,7 +425,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 				panel_4.add(lblNewLabel_14_1);
 				
 				JLabel lblNewLabel_14_1_1 = new JLabel("DISTRITO:");
-				lblNewLabel_14_1_1.setBounds(163, 79, 63, 25);
+				lblNewLabel_14_1_1.setBounds(179, 81, 75, 25);
 				panel_4.add(lblNewLabel_14_1_1);
 				
 				txtEmail = new JTextField();
@@ -434,7 +435,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 				
 				txtDistrito = new JTextField();
 				txtDistrito.setColumns(10);
-				txtDistrito.setBounds(236, 78, 86, 20);
+				txtDistrito.setBounds(252, 79, 100, 20);
 				panel_4.add(txtDistrito);
 			}
 			panel_3 = new JPanel();
@@ -455,18 +456,18 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 					        }
 					}
 				});
-				txtNomPro.setBounds(65, 11, 86, 20);
+				txtNomPro.setBounds(96, 14, 86, 20);
 				panel_3.add(txtNomPro);
 				txtNomPro.setColumns(10);
 			}
 			{
 				lblNewLabel_2 = new JLabel("NOMBRE: ");
-				lblNewLabel_2.setBounds(10, 11, 63, 25);
+				lblNewLabel_2.setBounds(10, 11, 86, 25);
 				panel_3.add(lblNewLabel_2);
 			}
 			{
 				lblNewLabel_3 = new JLabel("DESCRIPCIÓN:");
-				lblNewLabel_3.setBounds(172, 11, 104, 25);
+				lblNewLabel_3.setBounds(217, 8, 104, 25);
 				panel_3.add(lblNewLabel_3);
 			}
 			{
@@ -477,7 +478,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 						
 					}
 				});
-				txtDescripcion.setBounds(261, 11, 291, 54);
+				txtDescripcion.setBounds(331, 11, 291, 54);
 				txtDescripcion.setColumns(10);
 				panel_3.add(txtDescripcion);
 			}
@@ -505,12 +506,12 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 					}
 				});
 				txtPrecio.setColumns(10);
-				txtPrecio.setBounds(65, 40, 86, 20);
+				txtPrecio.setBounds(96, 45, 86, 20);
 				panel_3.add(txtPrecio);
 			}
 			{
 				lblNewLabel_5 = new JLabel("STOCK:");
-				lblNewLabel_5.setBounds(10, 71, 44, 25);
+				lblNewLabel_5.setBounds(10, 71, 86, 25);
 				panel_3.add(lblNewLabel_5);
 			}
 			{
@@ -527,7 +528,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 					}
 				});
 				txtStock.setColumns(10);
-				txtStock.setBounds(64, 73, 87, 20);
+				txtStock.setBounds(95, 75, 87, 20);
 				panel_3.add(txtStock);
 			}
 			
@@ -582,7 +583,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			panel_5.setLayout(null);
 			
 			cmbProveedor = new JComboBox<String>();
-			cmbProveedor.setBounds(529, 9, 86, 22);
+			cmbProveedor.setBounds(551, 34, 86, 22);
 			panel_5.add(cmbProveedor);
 			cmbProveedor.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
@@ -600,21 +601,21 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			});
 			
 			JLabel lblNewLabel_17 = new JLabel("PROVEEDOR:");
-			lblNewLabel_17.setBounds(444, 13, 116, 14);
+			lblNewLabel_17.setBounds(444, 38, 97, 14);
 			panel_5.add(lblNewLabel_17);
 			
 			txtNombreProveedor = new JTextField();
 			txtNombreProveedor.setEditable(false);
-			txtNombreProveedor.setBounds(625, 10, 96, 20);
+			txtNombreProveedor.setBounds(661, 36, 96, 20);
 			panel_5.add(txtNombreProveedor);
 			txtNombreProveedor.setColumns(10);
 			
 			JLabel lblNewLabel_18 = new JLabel("EMPLEADO:");
-			lblNewLabel_18.setBounds(444, 40, 116, 14);
+			lblNewLabel_18.setBounds(444, 68, 116, 14);
 			panel_5.add(lblNewLabel_18);
 			
 			cmbEmpleado = new JComboBox<String>();
-			cmbEmpleado.setBounds(518, 36, 86, 22);
+			cmbEmpleado.setBounds(518, 64, 86, 22);
 			panel_5.add(cmbEmpleado);
 			cmbEmpleado.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
@@ -668,14 +669,14 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 				txtNombreEmpleado = new JTextField();
 				txtNombreEmpleado.setEditable(false);
 				txtNombreEmpleado.setColumns(10);
-				txtNombreEmpleado.setBounds(614, 37, 89, 20);
+				txtNombreEmpleado.setBounds(614, 66, 96, 20);
 				panel_5.add(txtNombreEmpleado);
 			}
 			{
 				txtCargoEmpleado = new JTextField();
 				txtCargoEmpleado.setEditable(false);
 				txtCargoEmpleado.setColumns(10);
-				txtCargoEmpleado.setBounds(713, 37, 96, 20);
+				txtCargoEmpleado.setBounds(713, 66, 96, 20);
 				panel_5.add(txtCargoEmpleado);
 			}
 			llenarComboProveedores(cmbProveedor);
@@ -688,13 +689,21 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			}
 			{
 				txtNOMPRO = new JTextField();
+				txtNOMPRO.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent e) {
+						
+						
+						
+					}
+				});
 				txtNOMPRO.setColumns(10);
 				txtNOMPRO.setBounds(85, 10, 86, 20);
 				panel_5.add(txtNOMPRO);
 			}
 			{
 				lblNewLabel_20 = new JLabel("PRODUCTO:");
-				lblNewLabel_20.setBounds(10, 9, 116, 22);
+				lblNewLabel_20.setBounds(10, 9, 86, 22);
 				panel_5.add(lblNewLabel_20);
 			}
 			{
@@ -704,6 +713,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			}
 			{
 				txtPREVEN = new JTextField();
+				txtPREVEN.addKeyListener(this);
 				txtPREVEN.setColumns(10);
 				txtPREVEN.setBounds(108, 35, 63, 20);
 				panel_5.add(txtPREVEN);
@@ -716,18 +726,19 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			{
 				txtDES = new JTextField();
 				txtDES.setColumns(10);
-				txtDES.setBounds(265, 8, 169, 46);
+				txtDES.setBounds(281, 8, 153, 46);
 				panel_5.add(txtDES);
 			}
 			{
 				lblNewLabel_23 = new JLabel("CANTIDAD:");
-				lblNewLabel_23.setBounds(181, 57, 116, 25);
+				lblNewLabel_23.setBounds(181, 63, 116, 25);
 				panel_5.add(lblNewLabel_23);
 			}
 			{
 				txtCANT = new JTextField();
+				txtCANT.addKeyListener(this);
 				txtCANT.setColumns(10);
-				txtCANT.setBounds(248, 59, 86, 20);
+				txtCANT.setBounds(261, 66, 86, 20);
 				panel_5.add(txtCANT);
 			}
 			{
@@ -737,6 +748,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			}
 			{
 				txtPRECOM = new JTextField();
+				txtPRECOM.addKeyListener(this);
 				txtPRECOM.setColumns(10);
 				txtPRECOM.setBounds(118, 59, 53, 20);
 				panel_5.add(txtPRECOM);
@@ -761,7 +773,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 			}
 			{
 				lblNewLabel_11 = new JLabel("(N PRODUCTO)");
-				lblNewLabel_11.setBounds(505, 100, 86, 14);
+				lblNewLabel_11.setBounds(505, 100, 110, 14);
 				panel_5.add(lblNewLabel_11);
 			}
 			{
@@ -1406,5 +1418,76 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
         } else {
             ListarC(""); // Mostrar todo si está vacío
         }
+	}
+	public void keyPressed(KeyEvent e) {
+	}
+	public void keyReleased(KeyEvent e) {
+	}
+	public void keyTyped(KeyEvent e) {
+		if (e.getSource() == txtCANT) {
+			do_txtCANT_keyTyped(e);
+		}
+		if (e.getSource() == txtPRECOM) {
+			do_txtPRECOM_keyTyped(e);
+		}
+		if (e.getSource() == txtPREVEN) {
+			do_txtPREVEN_keyTyped(e);
+		}
+	}
+	protected void do_txtPREVEN_keyTyped(KeyEvent e) {
+	    char c = e.getKeyChar();
+	    JTextField textField = (JTextField) e.getComponent();
+	    String textoActual = textField.getText();
+
+	    // Permitir números y un solo punto decimal
+	    if (!Character.isDigit(c) && c != '.') {
+	        e.consume(); // Bloquear si no es número ni punto
+	    }
+
+	    // No permitir más de un punto decimal
+	    if (c == '.' && textoActual.contains(".")) {
+	        e.consume(); // Ya hay un punto
+	    }
+
+	    // Limitar a 8 caracteres en total (incluyendo el punto)
+	    if (textoActual.length() >= 8) {
+	        e.consume();
+	    }
+		
+	}
+	protected void do_txtPRECOM_keyTyped(KeyEvent e) {
+	    char c = e.getKeyChar();
+	    JTextField textField = (JTextField) e.getComponent();
+	    String textoActual = textField.getText();
+
+	    // Permitir números y un solo punto decimal
+	    if (!Character.isDigit(c) && c != '.') {
+	        e.consume(); // Bloquear si no es número ni punto
+	    }
+
+	    // No permitir más de un punto decimal
+	    if (c == '.' && textoActual.contains(".")) {
+	        e.consume(); // Ya hay un punto
+	    }
+
+	    // Limitar a 8 caracteres en total (incluyendo el punto)
+	    if (textoActual.length() >= 8) {
+	        e.consume();
+	    }
+	}
+	protected void do_txtCANT_keyTyped(KeyEvent e) {
+		  char c = e.getKeyChar();
+		    JTextField textField = (JTextField) e.getComponent();
+		    String textoActual = textField.getText();
+
+		    // Solo permitir dígitos del 0 al 9
+		    if (!Character.isDigit(c)) {
+		        e.consume(); // Bloquea si no es número
+		    }
+
+		    // Limitar a 5 dígitos (puedes cambiar el número si deseas)
+		    if (textoActual.length() >= 5) {
+		        e.consume(); // Bloquea si supera el límite
+		    }
 	}
 }
