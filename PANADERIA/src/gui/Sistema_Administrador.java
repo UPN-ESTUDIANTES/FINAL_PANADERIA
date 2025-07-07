@@ -59,9 +59,9 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	private JTextField txtPrecio;
 	private JLabel lblNewLabel_5;
 	private JTextField txtStock;
-	private JButton btnAgregar;
-	private JButton btnModificar;
-	private JButton btnEliminar;
+	private JButton btnAgregarProductos;
+	private JButton btnModificarProducto;
+	private JButton btnEliminarProducto;
 	private JLabel lblNewLabel_6;
 	private JLabel lblNewLabel_7;
 	private JLabel lblNewLabel_8;
@@ -115,7 +115,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	private JButton btnModificarCompraP;
 	private JButton btnBuscarComP;
 	private JLabel lblNewLabel_11;
-	private JButton btnNewButton_1;
+	private JButton btnBuscarProducto;
 
 	/**
 	 * Launch the application.
@@ -186,7 +186,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 				tabbedPane.addTab("EMPLEADOS", null, panel_2, null);
 				panel_2.setLayout(null);
 				{
-					lblNewLabel_6 = new JLabel("CODIGO:");
+					lblNewLabel_6 = new JLabel("DNI:");
 					lblNewLabel_6.setBounds(10, 11, 45, 14);
 					panel_2.add(lblNewLabel_6);
 				}
@@ -519,20 +519,20 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 				panel_3.add(txtStock);
 			}
 			
-			btnEliminar = new JButton("ELIMINAR");
-			btnEliminar.addActionListener(this);
-			btnEliminar.setBounds(136, 116, 89, 23);
-			panel_3.add(btnEliminar);
+			btnEliminarProducto = new JButton("ELIMINAR");
+			btnEliminarProducto.addActionListener(this);
+			btnEliminarProducto.setBounds(136, 116, 89, 23);
+			panel_3.add(btnEliminarProducto);
 			
-			btnModificar = new JButton("MODIFICAR");
-			btnModificar.addActionListener(this);
-			btnModificar.setBounds(246, 116, 104, 23);
-			panel_3.add(btnModificar);
+			btnModificarProducto = new JButton("MODIFICAR");
+			btnModificarProducto.addActionListener(this);
+			btnModificarProducto.setBounds(246, 116, 104, 23);
+			panel_3.add(btnModificarProducto);
 			{
-				btnAgregar = new JButton("AGREGAR");
-				btnAgregar.addActionListener(this);
-				btnAgregar.setBounds(20, 116, 89, 23);
-				panel_3.add(btnAgregar);
+				btnAgregarProductos = new JButton("AGREGAR");
+				btnAgregarProductos.addActionListener(this);
+				btnAgregarProductos.setBounds(20, 116, 89, 23);
+				panel_3.add(btnAgregarProductos);
 			}
 			{
 				table = new JTable();
@@ -540,10 +540,10 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 				scrollProductos.setBounds(10, 146, 799, 266);
 				panel_3.add(scrollProductos);
 				{
-					btnNewButton_1 = new JButton("BUSCAR / LISTAR");
-					btnNewButton_1.addActionListener(this);
-					btnNewButton_1.setBounds(360, 116, 130, 23);
-					panel_3.add(btnNewButton_1);
+					btnBuscarProducto = new JButton("BUSCAR / LISTAR");
+					btnBuscarProducto.addActionListener(this);
+					btnBuscarProducto.setBounds(360, 116, 130, 23);
+					panel_3.add(btnBuscarProducto);
 				}
 				// AUTOCOMPLETAR CAMPOS AL SELECCIONAR FILA
 				table.addMouseListener(new MouseAdapter() {
@@ -761,126 +761,9 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 		}	
 	}
 	
-	
-	
-	//LISTAR PRODUCTOS
-	public void ListarP(String nom) {
-	    DefaultTableModel modelo = new DefaultTableModel();
-	    ArrayProductos p = new ArrayProductos();
-	    ArrayList<Productos> lista;
-
-	    if (nom.length() == 0) {
-	        lista = p.listarProductos();
-	    } else {
-	        lista = p.consultarProductos(nom);
-	    }
-
-	    modelo.addColumn("Código");
-	    modelo.addColumn("Nombre");
-	    modelo.addColumn("Descripción");
-	    modelo.addColumn("Precio");
-	    modelo.addColumn("Stock");
-
-	    for (Productos produc : lista) {
-	        Object[] fila = new Object[5];
-	        fila[0] = produc.getID_PRODUCTO();
-	        fila[1] = produc.getNombre_PRO();
-	        fila[2] = produc.getDescripción_PRO();
-	        fila[3] = produc.getPrecio_venta();
-	        fila[4] = produc.getStock_PRO();
-	        modelo.addRow(fila);
-	    }
-
-	    table.setModel(modelo);
-	}
-	
-	//LISTAR EMPLEADOS
-	public void ListarE(String nom) 
-	{
-		DefaultTableModel modelo1 = new DefaultTableModel();
-		ArrayEmpleados e = new ArrayEmpleados();
-		ArrayList<Empleados> listaE = new ArrayList<Empleados>();
-		if(nom.length()==0) listaE=e.ListarEmpleados();
-		else listaE= e.ConsultarEmpleados(nom);	
-		modelo1.setRowCount(listaE.size());
-		Iterator<Empleados> it = listaE.iterator();
-		modelo1.addColumn("Código");
-		modelo1.addColumn("Nombre");
-		modelo1.addColumn("Apellido");
-		modelo1.addColumn("Cargo");
-		modelo1.addColumn("Salario");
-		modelo1.addColumn("Afiliación");
-		int i=0;
-		while(it.hasNext())
-		{
-			Object obj= it.next();
-			Empleados emple = (Empleados) obj;
-			modelo1.setValueAt(emple.getID_EMPLEADO(), i, 0);
-			modelo1.setValueAt(emple.getNombre_EMP(), i, 1);
-			modelo1.setValueAt(emple.getApellido_EMP(), i, 2);
-			modelo1.setValueAt(emple.getCargo_EMP(), i, 3);
-			modelo1.setValueAt(emple.getSalario(), i, 4);
-			modelo1.setValueAt(emple.getTipoAfiliacion(), i, 5);
-			i++;
-		}
-		table_1.setModel(modelo1);
-	}
-	
-	//LISTAR PROVEEDORES
-	public void ListarPV(String nom) 
-	{
-		DefaultTableModel modelo2 = new DefaultTableModel();
-		ArrayProveedor pv = new ArrayProveedor();
-		ArrayList<Proveedor> listaE = new ArrayList<Proveedor>();
-		if(nom.length()==0) listaE=pv.ListarProveedores();
-		else listaE= pv.ConsultarProveedores(nom);	
-		modelo2.setRowCount(listaE.size());
-		Iterator<Proveedor> it = listaE.iterator();
-		modelo2.addColumn("RUC 20");
-		modelo2.addColumn("EMPRESA");
-		modelo2.addColumn("Teléfono");
-		modelo2.addColumn("Email");
-		modelo2.addColumn("Distrito");
-		modelo2.addColumn("Dirección");
-		int i=0;
-		while(it.hasNext())
-		{
-			Object obj= it.next();
-			Proveedor prove = (Proveedor) obj;
-			modelo2.setValueAt(prove.getID_PROVEEDOR(), i, 0);
-			modelo2.setValueAt(prove.getNombre_PROV(), i, 1);
-			modelo2.setValueAt(prove.getTelefono_PROV(), i, 2);
-			modelo2.setValueAt(prove.getEmail_PROV(), i, 3);
-			modelo2.setValueAt(prove.getDireccion_PROV(), i, 4);
-			modelo2.setValueAt(prove.getDistrito_PROV(), i, 5);
-			i++;
-		}
-		table_2.setModel(modelo2);
-	}
-
-	// LLENAR COMBO DE PROVEEDORES
-		public void llenarComboProveedores(JComboBox<String> cmb) {
-			cmb.removeAllItems(); //Esto limpia el combo primero
-		    ArrayProveedor prov = new ArrayProveedor();
-		    for (Proveedor p : prov.ListarProveedores()) {
-		        cmb.addItem(p.getID_PROVEEDOR());
-		    }
-		}
-
-		// LLENAR COMBO DE EMPLEADOS
-		public void LlenarComboEmpleadosSUPER(JComboBox<String> cmb) {
-		    cmbEmpleado.removeAllItems();
-		    ArrayEmpleados empleadosDAO = new ArrayEmpleados();
-		    for (Empleados emp : empleadosDAO.ListarEmpleados()) {
-		        if (emp.getCargo_EMP().equalsIgnoreCase("Supervisor")) {
-		            cmbEmpleado.addItem(emp.getID_EMPLEADO());
-		        }
-		    }
-		}
-		
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnNewButton_1) {
-			do_btnNewButton_1_actionPerformed(e);
+		if (e.getSource() == btnBuscarProducto) {
+			do_btnBuscarProducto_actionPerformed(e);
 		}
 		if (e.getSource() == btnBuscarComP) {
 			do_btnBuscarComP_actionPerformed(e);
@@ -912,50 +795,172 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 		if (e.getSource() == btnAgregarE) {
 			do_btnAgregarE_actionPerformed(e);
 		}
-		if (e.getSource() == btnEliminar) {
-			do_btnEliminar_actionPerformed(e);
+		if (e.getSource() == btnEliminarProducto) {
+			do_btnEliminarProducto_actionPerformed(e);
 		}
-		if (e.getSource() == btnModificar) {
-			do_btnModificar_actionPerformed(e);
+		if (e.getSource() == btnModificarProducto) {
+			do_btnModificarProducto_actionPerformed(e);
 		}
-		if (e.getSource() == btnAgregar) {
-			do_btnAgregar_actionPerformed(e);
+		if (e.getSource() == btnAgregarProductos) {
+			do_btnAgregarProductos_actionPerformed(e);
 		}
 	}
 	
-	//PROGRAMAMOS LA PESTAÑA PRODUCTOS
-	
-	protected void do_btnAgregar_actionPerformed(ActionEvent e) {
-		try {
-	        ArrayProductos dao = new ArrayProductos();
-	        String nuevoID = dao.generarNuevoIDProducto(); // Genera automáticamente el ID tipo A01, A02...
+	//LISTAR PRODUCTOS
+	public void ListarP(String nom) {
+	    DefaultTableModel modelo = new DefaultTableModel();
+	    ArrayProductos p = new ArrayProductos();
+	    ArrayList<Productos> lista;
 
-	        Productos produc = new Productos(
-	            nuevoID,
-	            txtNomPro.getText(),
-	            txtDescripcion.getText(),
-	            Double.parseDouble(txtPrecio.getText()),
-	            Integer.parseInt(txtStock.getText())
-	        );
-
-	        dao.insertar(produc);
-	        ListarP("");
-	        LimpiarP();
-	        JOptionPane.showMessageDialog(null, "Producto agregado con ID: " + nuevoID);
-
-	    } catch (Exception e2) {
-	        JOptionPane.showMessageDialog(null, "Datos vacíos o inválidos");
+	    if (nom.length() == 0) {
+	        lista = p.listarProductos();
+	    } else {
+	        lista = p.consultarProductos(nom);
 	    }
 
-	    LlenarComboEmpleadosSUPER(cmbEmpleado);
+	    modelo.addColumn("Código");
+	    modelo.addColumn("Nombre");
+	    modelo.addColumn("Descripción");
+	    modelo.addColumn("Precio");
+	    modelo.addColumn("Stock");
+
+	    for (Productos pro : lista) {
+	        Object[] fila = new Object[5];
+	        fila[0] = pro.getID_PRODUCTO();
+	        fila[1] = pro.getNombre_PRO();
+	        fila[2] = pro.getDescripción_PRO();
+	        fila[3] = pro.getPrecio_venta();
+	        fila[4] = pro.getStock_PRO();
+	        modelo.addRow(fila);
+	    }
+	    table.setModel(modelo);
 	}
+	
+	//LISTAR EMPLEADOS
+	public void ListarE(String nom) 
+	{
+		DefaultTableModel modelo1 = new DefaultTableModel();
+		ArrayEmpleados e = new ArrayEmpleados();
+		ArrayList<Empleados> listaE = new ArrayList<Empleados>();
+		
+		if(nom.length()==0) listaE=e.ListarEmpleados();
+		else listaE= e.ConsultarEmpleados(nom);	
+		
+		modelo1.setRowCount(listaE.size());
+		Iterator<Empleados> it = listaE.iterator();
+		
+		modelo1.addColumn("Código");
+		modelo1.addColumn("Nombre");
+		modelo1.addColumn("Apellido");
+		modelo1.addColumn("Cargo");
+		modelo1.addColumn("Salario");
+		modelo1.addColumn("Afiliación");
+		
+		int i=0;
+		while(it.hasNext())
+		{
+			Object obj= it.next();
+			Empleados emple = (Empleados) obj;
+			modelo1.setValueAt(emple.getID_EMPLEADO(), i, 0);
+			modelo1.setValueAt(emple.getNombre_EMP(), i, 1);
+			modelo1.setValueAt(emple.getApellido_EMP(), i, 2);
+			modelo1.setValueAt(emple.getCargo_EMP(), i, 3);
+			modelo1.setValueAt(emple.getSalario(), i, 4);
+			modelo1.setValueAt(emple.getTipoAfiliacion(), i, 5);
+			i++;
+		}
+		table_1.setModel(modelo1);
+	}
+	
+	//LISTAR PROVEEDORES
+	public void ListarPV(String nom) 
+	{
+		DefaultTableModel modelo2 = new DefaultTableModel();
+		ArrayProveedor pv = new ArrayProveedor();
+		ArrayList<Proveedor> listaE = new ArrayList<Proveedor>();
+		if(nom.length()==0) listaE=pv.ListarProveedores();
+		else listaE= pv.ConsultarProveedores(nom);	
+		
+		modelo2.setRowCount(listaE.size());
+		Iterator<Proveedor> it = listaE.iterator();
+		
+		modelo2.addColumn("RUC 20");
+		modelo2.addColumn("EMPRESA");
+		modelo2.addColumn("Teléfono");
+		modelo2.addColumn("Email");
+		modelo2.addColumn("Distrito");
+		modelo2.addColumn("Dirección");
+		
+		int i=0;
+		while(it.hasNext())
+		{
+			Object obj= it.next();
+			Proveedor prove = (Proveedor) obj;
+			modelo2.setValueAt(prove.getID_PROVEEDOR(), i, 0);
+			modelo2.setValueAt(prove.getNombre_PROV(), i, 1);
+			modelo2.setValueAt(prove.getTelefono_PROV(), i, 2);
+			modelo2.setValueAt(prove.getEmail_PROV(), i, 3);
+			modelo2.setValueAt(prove.getDireccion_PROV(), i, 4);
+			modelo2.setValueAt(prove.getDistrito_PROV(), i, 5);
+			i++;
+		}
+		table_2.setModel(modelo2);
+	}
+
+	// LLENAR COMBO DE PROVEEDORES
+	public void llenarComboProveedores(JComboBox<String> cmb) {
+		cmb.removeAllItems(); //LIMPIA EL COMBOBOX
+		ArrayProveedor prov = new ArrayProveedor();
+	    for (Proveedor p : prov.ListarProveedores()) {
+	        cmb.addItem(p.getID_PROVEEDOR());
+		    }
+		}
+
+	// LLENAR COMBO DE EMPLEADOS
+	public void LlenarComboEmpleadosSUPER(JComboBox<String> cmb) {
+		cmbEmpleado.removeAllItems(); //LIMPIA EL COMBOBOX
+		ArrayEmpleados empleadosDAO = new ArrayEmpleados();
+		for (Empleados emp : empleadosDAO.ListarEmpleados()) {
+			if (emp.getCargo_EMP().equalsIgnoreCase("Supervisor")) {
+		    cmbEmpleado.addItem(emp.getID_EMPLEADO());
+		    }
+		}
+	}
+
+	//PROGRAMAMOS LA PESTAÑA PRODUCTOS
+		
 	void LimpiarP() {
 		txtNomPro.setText("");
 		txtDescripcion.setText("");
 		txtPrecio.setText("");
 		txtStock.setText("");	
 	}	
-	protected void do_btnModificar_actionPerformed(ActionEvent e) 
+	
+	//BOTÓN AGREGAR PRODUCTOS
+	protected void do_btnAgregarProductos_actionPerformed(ActionEvent e) {
+		try {
+	        ArrayProductos AP = new ArrayProductos();
+	        String nuevoID = AP.generarNuevoIDProducto(); //GENERA AUTOMATICAMENTE ID A01, A02...
+
+	        Productos pro = new Productos(
+	            nuevoID,
+	            txtNomPro.getText(),
+	            txtDescripcion.getText(),
+	            Double.parseDouble(txtPrecio.getText()),
+	            Integer.parseInt(txtStock.getText())
+	        );
+	        AP.insertar(pro);
+	        ListarP("");
+	        LimpiarP();
+	        JOptionPane.showMessageDialog(null, "Producto agregado con ID: " + nuevoID);
+	    } catch (Exception e2) {
+	        JOptionPane.showMessageDialog(null, "Datos vacíos o inválidos");
+	    }
+
+	    LlenarComboEmpleadosSUPER(cmbEmpleado);
+	}
+	//BOTÓN MODIFICAR PRODUCTOS
+	protected void do_btnModificarProducto_actionPerformed(ActionEvent e) 
 	{
 		try {
 	        String nombre = txtNomPro.getText().trim();
@@ -963,22 +968,22 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	        double precioVenta = Double.parseDouble(txtPrecio.getText());
 	        int stock = Integer.parseInt(txtStock.getText());
 
-	        ArrayProductos dao = new ArrayProductos();
-	        ArrayList<Productos> lista = dao.ConsultarPorNombre(nombre);
+	        ArrayProductos AP = new ArrayProductos();
+	        ArrayList<Productos> lista = AP.ConsultarPorNombre(nombre);
 
 	        if (lista.isEmpty()) {
 	            JOptionPane.showMessageDialog(null, "No se encontró el producto con ese nombre.");
 	            return;
 	        }
 
-	        // Obtener el ID real del producto
+	        // OBTENER ID
 	        String idProducto = lista.get(0).getID_PRODUCTO();
 
-	        // Crear el objeto actualizado
+	        // ACTUALIZAR
 	        Productos p = new Productos(idProducto, nombre, descripcion, precioVenta, stock);
 
-	        // Modificar el producto
-	        dao.editar(p);
+	        // EDITAR, LISTAR Y LIMPIAR
+	        AP.editar(p);
 	        ListarP("");
 	        LimpiarP();
 
@@ -987,7 +992,8 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	        JOptionPane.showMessageDialog(null, "Error al modificar producto: " + e2.getMessage());
 	    }
 	}
-	protected void do_btnEliminar_actionPerformed(ActionEvent e) 
+	//BOTÓN ELIMINAR PRODUCTOS
+	protected void do_btnEliminarProducto_actionPerformed(ActionEvent e) 
 	{
 		try {
 	        String nombre = txtNomPro.getText().trim();
@@ -996,8 +1002,8 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	            return;
 	        }
 
-	        ArrayProductos eliminar = new ArrayProductos();
-	        eliminar.eliminarPorNombre(nombre);
+	        ArrayProductos 	AP = new ArrayProductos();
+	        AP.eliminarPorNombre(nombre);
 	        ListarP("");
 	        LimpiarP();
 	        JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
@@ -1005,13 +1011,13 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 	        JOptionPane.showMessageDialog(null, "Error al eliminar: " + ex.getMessage());
 	    }
 	}
-	
-	protected void do_btnNewButton_1_actionPerformed(ActionEvent e) {
+	//BOTÓN BUSCAR PRODUCTOS
+	protected void do_btnBuscarProducto_actionPerformed(ActionEvent e) {
 		String nombre = txtNomPro.getText().trim();
 	    ListarP(nombre);
 	}
-	//PROGRMAMOS LA PANTALLA DE EMPLEADOS
 	
+	//PROGRAMAMOS LA PESTAÑA EMPLEADOS
 	protected void do_btnAgregarE_actionPerformed(ActionEvent e) 
 	{
 		try 
@@ -1371,7 +1377,7 @@ public class Sistema_Administrador extends JFrame implements ActionListener {
 
             // Actualizar stock y precio en PRODUCTOS
             daoProd.ActualizarStock(idProducto, diferenciaCantidad);
-            daoProd.ActualizarPrecioVenta(idProducto, precioVenta); // Método adicional que ya te pasé
+            daoProd.ActualizarPrecioVenta(idProducto, precioVenta);
 
             JOptionPane.showMessageDialog(null, "Compra modificada correctamente.");
             ListarC("");
