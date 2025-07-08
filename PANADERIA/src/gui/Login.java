@@ -17,15 +17,16 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class Login extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtUsuario;
-	private JTextField txtContraseña;
 	private JButton btnIngresarLogin;
 	private JComboBox cbocargo;
+	private JPasswordField txtContraseña;
 
 	/**
 	 * Launch the application.
@@ -94,11 +95,6 @@ public class Login extends JFrame implements ActionListener {
 		lblNewLabel_3.setBounds(10, 180, 119, 23);
 		panel_1.add(lblNewLabel_3);
 		
-		txtContraseña = new JTextField();
-		txtContraseña.setColumns(10);
-		txtContraseña.setBounds(10, 204, 140, 20);
-		panel_1.add(txtContraseña);
-		
 		cbocargo = new JComboBox();
 		cbocargo.setModel(new DefaultComboBoxModel(new String[] {"ADMINISTRADOR", "EMPLEADO"}));
 		cbocargo.setBounds(10, 95, 141, 22);
@@ -119,34 +115,71 @@ public class Login extends JFrame implements ActionListener {
 		btnCerrarSesion.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnCerrarSesion.setBounds(49, 292, 150, 33);
 		panel_1.add(btnCerrarSesion);
+		{
+			txtContraseña = new JPasswordField();
+			txtContraseña.setBounds(11, 213, 140, 19);
+			panel_1.add(txtContraseña);
+		}
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnIngresarLogin) {
 			do_btnIngresarLogin_actionPerformed(e);
 		}
 	}
+	
+	// Variables globales en tu clase (fuera del método, al inicio de la clase)
+	private int intentos = 0;
+	private long tiempoBloqueo = 0;
+	
 	protected void do_btnIngresarLogin_actionPerformed(ActionEvent e) {
-		 String usuario    = txtUsuario.getText().trim();
-	     String contraseña = txtContraseña.getText().trim();
-	     String rol  = (String)cbocargo.getSelectedItem();
-	     
-	     if ("ADMINISTRADOR".equals(rol) && "admin".equals(usuario) && "1234".equals(contraseña)) {
-	            Sistema_Administrador v2 = new Sistema_Administrador();
-	            v2.setVisible(true);
-	            this.setVisible(false);
-	            JOptionPane.showMessageDialog(this,
-	                "Acceso concedido como " + rol + ". Bienvenido " + usuario);
+	    String usuario    = txtUsuario.getText().trim();
+	    String contraseña = txtContraseña.getText().trim();
+	    String rol        = (String) cbocargo.getSelectedItem();
+
+	    // Verifica si estamos en periodo de espera (30 segundos)
+	    if (System.currentTimeMillis() < tiempoBloqueo) {
+	        long segundosRestantes = (tiempoBloqueo - System.currentTimeMillis()) / 1000;
+	        JOptionPane.showMessageDialog(this, 
+	            "Demasiados intentos fallidos. Por favor espera " + segundosRestantes + " segundos.");
+	        return;
+	    }
+
+	    // Validar credenciales
+	    boolean accesoConcedido = false;
+
+	    if ("ADMINISTRADOR".equals(rol) && "admin".equals(usuario) && "1234".equals(contraseña)) {
+	        Sistema_Administrador v2 = new Sistema_Administrador();
+	        v2.setVisible(true);
+	        this.setVisible(false);
+	        JOptionPane.showMessageDialog(this, 
+	            "Acceso concedido como " + rol + ". Bienvenido " + usuario);
+	        accesoConcedido = true;
+	    } 
+	    else if ("EMPLEADO".equals(rol) && "empleado".equals(usuario) && "abcd".equals(contraseña)) {
+	        Sistema_Empleado v2 = new Sistema_Empleado();
+	        v2.setVisible(true);
+	        this.setVisible(false);
+	        JOptionPane.showMessageDialog(this, 
+	            "Acceso concedido como " + rol + ". Bienvenido " + usuario);
+	        accesoConcedido = true;
+	    }
+
+	    // Si el acceso fue exitoso, reiniciar contador
+	    if (accesoConcedido) {
+	        intentos = 0;
+	        tiempoBloqueo = 0;
+	    } 
+	    else {
+	        intentos++;
+	        if (intentos >= 3) {
+	            JOptionPane.showMessageDialog(this, 
+	                "Has superado los 3 intentos. Espera 30 segundos para volver a intentarlo.");
+	            tiempoBloqueo = System.currentTimeMillis() + 30 * 1000; // 30 segundos
+	            intentos = 0; // opcional: reinicia intentos después del bloqueo
+	        } else {
+	            JOptionPane.showMessageDialog(this, 
+	                "Usuario, contraseña o rol incorrectos. Intento " + intentos + " de 3.");
 	        }
-	        else if ("EMPLEADO".equals(rol) && "empleado".equals(usuario) && "abcd".equals(contraseña)) {
-	            Sistema_Empleado v2 = new Sistema_Empleado();
-	            v2.setVisible(true);
-	            this.setVisible(false);
-	            JOptionPane.showMessageDialog(this,
-	                "Acceso concedido como " + rol + ". Bienvenido " + usuario);
-	        }
-	        else {
-	            JOptionPane.showMessageDialog(this,
-	                "Usuario, contraseña o rol incorrectos");
-	        }
+	    }
 	}
 }
